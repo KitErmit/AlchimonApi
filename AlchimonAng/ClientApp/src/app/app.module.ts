@@ -28,12 +28,11 @@ import { ProfileComponent } from './profile/profile.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: ProfileComponent},
-      { path: 'fetch-data', component: FetchDataComponent },
       { path: 'authorize', component: UserComponent },
       { path: 'my-profile', component: ProfileComponent },
     ])
   ],
-  providers: [],
+  providers: [NavMenuComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

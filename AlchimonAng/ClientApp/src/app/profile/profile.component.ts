@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 
 export class SimpleResp {
   constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) { }
@@ -10,7 +11,7 @@ export class SimpleResp {
 
 @Component({
   selector: 'app-profile',
-  templateUrl: './profile.component.html',
+  templateUrl: './profile.component.html'
 })
 export class ProfileComponent {
 
@@ -18,7 +19,7 @@ export class ProfileComponent {
 
   resp: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
   bufer: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private navmen: NavMenuComponent) { }
 
   ngOnInit() {
     const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
@@ -41,6 +42,7 @@ export class ProfileComponent {
         next: (data: any) => {
           this.resp = new SimpleResp(data.id, data.nik, data.email, data.role, data.money);
           this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
+          this.navmen.trygetname();
         },
         error: error => console.log(error)
       });

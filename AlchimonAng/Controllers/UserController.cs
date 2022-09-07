@@ -86,7 +86,7 @@ public class UserController : ControllerBase
             try
             {
                 var pl = _uService.GetPlayer(id);
-                if(pl is not null) return Ok(new AuthenticationRespViewModel { Good = true, Text = "ok" });
+                if(pl is not null) return Ok(new AuthenticationRespViewModel { Good = true, Text = pl.Nik});
             }
             catch(Exception ex)
             {

@@ -44,8 +44,10 @@ namespace AlchimonAng.Services
         }
         public Task Update(Player updatePlayer)
         {
-            var oldVersion = _saveLoader.Load(_path).FirstOrDefault(a => a.Key == updatePlayer.Id).Value;
-            oldVersion = updatePlayer;
+            _roster = _saveLoader.Load(_path);
+            var oldVersion = _roster.FirstOrDefault(a => a.Key == updatePlayer.Id).Value;
+            _roster.Remove(oldVersion.Id);
+            _roster.Add(updatePlayer.Id, updatePlayer);
             _saveLoader.Save(_roster, _path);
             _roster.Clear();
             return Task.CompletedTask;

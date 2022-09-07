@@ -88,7 +88,23 @@ public class UserController : ControllerBase
         if (identity is null) return new Player { Email = "клаймсы пусты" };
         string? id = identity.FindFirst(ClaimTypes.Country).Value;
         if (id is null) return new Player { Email = "клаймс ID пуст" };
-        return _uService.GitPlayer(id);
+        return _uService.GetPlayer(id);
+    }
+
+    [Authorize]
+    [HttpPut("put_nik")]
+    public async Task<IActionResult> PutPlayer([FromBody] Player player)
+    {
+        Console.WriteLine(JsonSerializer.Serialize(HttpContext.Request.Headers));
+        var identity = User.Identity as ClaimsIdentity;
+        if (identity is null) throw new Exception("Клаймсы в PutPlayer пусты");
+        string? id = identity.FindFirst(ClaimTypes.Country).Value;
+        if (id is null) return Ok(new AuthenticationRespViewModel { Good = true, Text = "Клаймс ID в PutPlayer пусты" });
+        Player newpl = _uService.GetPlayer(id);
+        newpl.Nik = player.Nik;
+        await _uService.PutPlayer(newpl);
+        newpl = _uService.GetPlayer(newpl.Id);
+        return Ok(new AuthenticationRespViewModel { Good=true, Text = $"Готово. {newpl.Nik}"});
     }
 
 

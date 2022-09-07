@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -17,7 +19,7 @@ export class ProfileComponent {
 
   resp: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
   bufer: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
@@ -32,10 +34,26 @@ export class ProfileComponent {
     
   }
 
+  submit(bufer: SimpleResp) {
+
+    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    const body = {
+      id: bufer.id, nik: bufer.nik
+    }
+    this.http.put('https://localhost:7170/User/put_nik', body, { headers: myHeaders }).subscribe({
+      next: (data: any) => {
+        console.log(data.text);
+        this.router.navigateByUrl("/my-profile");
+      },
+      error: error => console.log(error)
+    });
+    
+  }
 
 
   putForm() {
     this.putable = true;
+    this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
   }
   revet() {
     this.putable = false;

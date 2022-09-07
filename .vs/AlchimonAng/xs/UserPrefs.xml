@@ -1,21 +1,17 @@
 ﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/profile/profile.component.html">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Models/Player.cs">
     <Files>
-      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="84" Column="27" />
+      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="105" Column="23" />
       <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="13" Column="26" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="19" Column="24" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="11" Column="11" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="52" Column="51" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="28" Column="11" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Models/Player.cs" Line="14" Column="145" />
-      <File FileName="AlchimonAng/Services/UserService.cs" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Models/Player.cs" Line="25" Column="1" />
+      <File FileName="AlchimonAng/Services/UserService.cs" Line="96" Column="25" />
       <File FileName="AlchimonAng/Program.cs" Line="49" Column="2" />
       <File FileName="AlchimonAng/appsettings.json" Line="1" Column="1" />
       <File FileName="AlchimonAng/Properties/launchSettings.json" Line="1" Column="1" />
@@ -23,10 +19,11 @@
       <File FileName="AlchimonAng/ClientApp/package.json" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/styles.css" Line="1" Column="1" />
       <File FileName="AlchimonAng/Base/UserRoster.txt" Line="1" Column="537" />
-      <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="13" Column="145" />
+      <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="8" Column="9" />
       <File FileName="AlchimonAng/ViewModels/AuthenticationRespViewModel.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="7" Column="44" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="22" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="43" Column="20" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="21" Column="103" />
+      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="49" Column="39" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -45,6 +42,7 @@
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True" />
               <Node name="Properties" expanded="True" />
+              <Node name="Services" expanded="True" />
               <Node name="ViewModels" expanded="True" />
               <Node name="wwwroot" expanded="True" />
               <Node name="appsettings.json" expanded="True" />
@@ -57,7 +55,11 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

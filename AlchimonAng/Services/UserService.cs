@@ -14,7 +14,8 @@ namespace AlchimonAng.Services
         Task<AuthenticationRespViewModel> Registration(Player newPlayer);
         Task<AuthenticationRespViewModel> Authentication(string nik, string password);
         string GetRoster();
-        Player GitPlayer(string id);
+        Player GetPlayer(string id);
+        Task PutPlayer(Player player);
     }
 
     public class SimpleUserService : IUserService
@@ -92,11 +93,16 @@ namespace AlchimonAng.Services
                 );
         }
 
-        public Player GitPlayer(string id)
+        public Player GetPlayer(string id)
         {
             var player = _playerRepository.GetOne(id).Result;
             if (player is null) throw new Exception($"Игрок не найден id: {id}");
             return player;
+        }
+
+        public async Task PutPlayer(Player player)
+        {
+            await _playerRepository.Update(player);
         }
 
 
@@ -107,6 +113,7 @@ namespace AlchimonAng.Services
             var hashValue = sha256.ComputeHash(objUtf8.GetBytes(pass));
             return Convert.ToBase64String(hashValue);
         }
+
     }
 }
 

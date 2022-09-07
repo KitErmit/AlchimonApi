@@ -12,10 +12,16 @@
     <div class="form-group">
         <label>Nik</label>
         <input class="form-control" name="email" [(ngModel)]="bufer.nik" #nik="ngModel"
-               required/>
+               required />
         <div [hidden]="nik.valid || nik.untouched" class="alert alert-danger">
             Поле должно быть заполнено
         </div>
     </div>
-    <button class="btn btn-default" (click)="revet()">отменить</button>
+        <div class="form-group">
+            <button [disabled]="nik.invalid" class="btn btn-default" (click)="submit(bufer)">Сохронить</button>
+            <p> или </p>
+            <button class="btn btn-default" (click)="revet()">отменить</button>
+        </div>
+    
+    
 </div>

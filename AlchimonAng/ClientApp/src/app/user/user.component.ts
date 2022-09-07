@@ -16,8 +16,8 @@ export class UserComponent {
   servresp: TokenResp = new TokenResp("Pusto", false);
 
   done: boolean = false;
-  reg: boolean = true;
-  auth: boolean = false;
+  reg: boolean = false;
+  auth: boolean = true;
   passdone: boolean = false;
   otpr: User = new User(" ", " ", " ");
   user: User | undefined;

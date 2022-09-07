@@ -3,18 +3,17 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/app.module.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/profile/profile.component.html">
     <Files>
       <File FileName="AlchimonAng/Controllers/UserController.cs" Line="84" Column="27" />
       <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="13" Column="26" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="78" Column="56" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="26" Column="2" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="19" Column="24" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="11" Column="11" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/test/test.component.html" Line="1" Column="1" />
       <File FileName="AlchimonAng/Models/Player.cs" Line="14" Column="145" />
       <File FileName="AlchimonAng/Services/UserService.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/Program.cs" Line="49" Column="2" />
@@ -26,7 +25,8 @@
       <File FileName="AlchimonAng/Base/UserRoster.txt" Line="1" Column="537" />
       <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="13" Column="145" />
       <File FileName="AlchimonAng/ViewModels/AuthenticationRespViewModel.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/test.component.ts" Line="4" Column="64" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="7" Column="44" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="22" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -39,7 +39,6 @@
                   <Node name="app" expanded="True">
                     <Node name="profile" expanded="True" />
                     <Node name="user" expanded="True" />
-                    <Node name="app.module.ts" selected="True" />
                   </Node>
                 </Node>
               </Node>

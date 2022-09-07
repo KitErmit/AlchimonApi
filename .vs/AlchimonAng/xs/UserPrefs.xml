@@ -1,4 +1,36 @@
-﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
-  <MonoDevelop.Ide.ItemProperties.AlchimonAng FirstBuild="True" />
+﻿<Properties>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Program.cs">
+    <Files>
+      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="100" Column="5" />
+      <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="34" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="87" Column="5" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="70" Column="37" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/test/test.component.html" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/test/test.component.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Models/Player.cs" Line="44" Column="1" />
+      <File FileName="AlchimonAng/Services/UserService.cs" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Program.cs" Line="49" Column="2" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AlchimonAng" expanded="True" selected="True" />
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.Debugger.WatchPad">
+        <State />
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

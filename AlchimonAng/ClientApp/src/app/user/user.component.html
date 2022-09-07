@@ -1,0 +1,71 @@
+
+<div *ngIf="reg">
+
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" name="email" [(ngModel)]="otpr.email" #email="ngModel"
+               required pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$" />
+        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+            Некорректный email
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" name="password" [(ngModel)]="otpr.password" #password="ngModel"
+               required pattern="(?=^.{8,12}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+            Пароль должен содержать от 8 до 25 символов, только латинские символы, хотя бы одну заглавную, цифру и спецсимвол
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password Conf</label>
+        <input class="form-control" type="password" name="passconf" [(ngModel)]="otpr.passconf" />
+    </div>
+    <div class="form-group">
+        <button [disabled]="email.invalid || password.invalid" class="btn btn-default" (click)="submit(otpr)">Отправить</button>
+        <p> или </p>
+        <button class="btn btn-default" (click)="authform()">Авторизоваться</button>
+    </div>
+
+    <div *ngIf="passdone" class="alert alert-danger">
+        {{servresp?.text}}
+    </div>
+</div>
+
+
+<div *ngIf="auth">
+    <div class="form-group">
+        <label>Email</label>
+        <input class="form-control" name="email" [(ngModel)]="otpr.email" #email="ngModel"
+               required />
+        <div [hidden]="email.valid || email.untouched" class="alert alert-danger">
+            Заполните поле
+        </div>
+    </div>
+    <div class="form-group">
+        <label>Password</label>
+        <input class="form-control" type="password" name="password" [(ngModel)]="otpr.password" #password="ngModel"
+               required />
+        <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
+            Заполните поле
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <button [disabled]="email.invalid || password.invalid" class="btn btn-default" (click)="authsubmit(otpr)">Отправить</button>
+        <p> или </p>
+        <button class="btn btn-default" (click)="regform()">Зарегистрироваться</button>
+    </div>
+
+    <div *ngIf="passdone" class="alert alert-danger">
+        {{servresp?.text}}
+    </div>
+    <div *ngIf="passdone" class="alert alert-danger">
+        Пароль должен содержать от 8 до 25 символов, только латинские символы, хотя бы одну заглавную, цифру и спецсимвол
+    </div>
+</div>
+
+
+<div *ngIf="done">
+    <p>Ответ: {{servresp?.text}}</p>
+</div>

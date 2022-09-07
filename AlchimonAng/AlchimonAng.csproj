@@ -5,22 +5,41 @@
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
     <SpaRoot>ClientApp\</SpaRoot>
-    <SpaProxyServerUrl>https://localhost:44413</SpaProxyServerUrl>
+    <SpaProxyServerUrl>https://localhost:44497</SpaProxyServerUrl>
     <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Don't publish the SPA source files, but do show them in the project files list -->
     <Content Remove="$(SpaRoot)**" />
-    <None Remove="$(SpaRoot)**" />
     <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\User\" />
+    <None Remove="ClientApp\src\app\user.component.ts" />
+    <None Remove="ViewModels\" />
+    <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
+    <None Remove="Models\" />
+    <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
+    <None Remove="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    <None Remove="Services\" />
+    <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
+    <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
+    <None Remove="ClientApp\src\app\home %28копия%29\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModels\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+    <Folder Include="ClientApp\src\app\test\" />
+  </ItemGroup>
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">

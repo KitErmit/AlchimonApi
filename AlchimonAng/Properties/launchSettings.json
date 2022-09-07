@@ -3,15 +3,15 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:64886",
-      "sslPort": 44391
+      "applicationUrl": "http://localhost:50744",
+      "sslPort": 44340
     }
   },
   "profiles": {
     "AlchimonAng": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:7056;http://localhost:5281",
+      "applicationUrl": "https://localhost:7170;http://localhost:5177",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.SpaProxy"

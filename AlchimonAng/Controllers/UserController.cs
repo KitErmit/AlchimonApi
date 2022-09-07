@@ -81,7 +81,7 @@ public class UserController : ControllerBase
     }
 
     [Authorize]
-    [HttpGet("play")]
+    [HttpGet("getplayer")]
     public Player PlInform()
     {
         var identity = User.Identity as ClaimsIdentity;

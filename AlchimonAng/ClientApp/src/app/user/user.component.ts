@@ -49,7 +49,7 @@ export class UserComponent {
             localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
 
             this.servresp.text = "КРАСАВЧЕГ" + <string>localStorage.getItem("AlToken");
-            this.router.navigateByUrl("/test");
+            this.router.navigateByUrl("/my-profile");
           }
           else {
             this.passdone = true;
@@ -75,7 +75,7 @@ export class UserComponent {
               this.reg = false;
               localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
               this.servresp.text = <string>localStorage.getItem("AlToken");
-              this.router.navigateByUrl("/test");
+              this.router.navigateByUrl("/my-profile");
             }
             else {
               this.passdone = true;

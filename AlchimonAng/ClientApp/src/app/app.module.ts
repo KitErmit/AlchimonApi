@@ -10,7 +10,7 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
-import { TestComponent } from './test/test.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { TestComponent } from './test/test.component';
     HomeComponent,
     FetchDataComponent,
     UserComponent,
-    TestComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -30,7 +30,7 @@ import { TestComponent } from './test/test.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'user', component: UserComponent },
-      { path: 'test', component: TestComponent },
+      { path: 'my-profile', component: ProfileComponent },
     ])
   ],
   providers: [],

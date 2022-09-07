@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
@@ -23,6 +22,20 @@ export class ProfileComponent {
 
   ngOnInit() {
     const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) this.updateProfile();
+          else this.router.navigateByUrl("/authorize");
+        },
+        error: error => console.log(error)
+      });
+
+    
+  }
+
+  updateProfile() {
+    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     this.http.get('https://localhost:7170/User/getplayer', { headers: myHeaders })
       .subscribe({
         next: (data: any) => {
@@ -43,7 +56,8 @@ export class ProfileComponent {
     this.http.put('https://localhost:7170/User/put_nik', body, { headers: myHeaders }).subscribe({
       next: (data: any) => {
         console.log(data.text);
-        this.router.navigateByUrl("/my-profile");
+        this.updateProfile();
+        this.revet();
       },
       error: error => console.log(error)
     });

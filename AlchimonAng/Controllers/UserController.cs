@@ -73,6 +73,30 @@ public class UserController : ControllerBase
         return await _uService.Authentication(user.Email, user.Password);
     }
 
+    [HttpGet("AuthValid")]
+    public async Task<IActionResult> AuthValid()
+    {
+        ClaimsIdentity? identity = User.Identity as ClaimsIdentity;
+        if(!identity.IsAuthenticated) return Ok(new AuthenticationRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
+        if (identity is null) return Ok(new AuthenticationRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
+        string? id = identity.FindFirst(ClaimTypes.Country).Value;
+        if (id is null) return Ok(new AuthenticationRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
+        else if (id.Length > 1)
+        {
+            try
+            {
+                var pl = _uService.GetPlayer(id);
+                if(pl is not null) return Ok(new AuthenticationRespViewModel { Good = true, Text = "ok" });
+            }
+            catch(Exception ex)
+            {
+                return Ok(new AuthenticationRespViewModel { Good = false, Text = $"{ex.Message}" });
+            }
+            return Ok(new AuthenticationRespViewModel { Good = false, Text = $"Не знаю, как оно вышло за пределы трайкэч в AuthValid" });
+        } 
+        else return Ok(new AuthenticationRespViewModel { Good = false, Text = "Что-то не так в AuthValid" });
+    }
+
     [Authorize(Roles = RoleConsts.God)] // 
     [HttpGet("GetRoster")]
     public string GitRoster()

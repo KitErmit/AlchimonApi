@@ -27,9 +27,9 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: ProfileComponent},
       { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'user', component: UserComponent },
+      { path: 'authorize', component: UserComponent },
       { path: 'my-profile', component: ProfileComponent },
     ])
   ],

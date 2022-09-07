@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { map, catchError } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from './model';
@@ -32,6 +33,8 @@ export class UserComponent {
     this.auth = false;
   }
 
+
+
   authsubmit(otpr: User) {
     const myHeaders = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
     const body = { email: otpr.email, password: otpr.password, passconf: otpr.passconf };
@@ -62,7 +65,7 @@ export class UserComponent {
 
       const myHeaders = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
       const body = { email: otpr.email, password: otpr.password, passconf: otpr.passconf };
-      this.http.post('https://localhost:7170/User/Authorize', body, { headers: myHeaders })
+      this.http.post('https://localhost:7170/User/Registration', body, { headers: myHeaders })
         .subscribe({
           next: (data: any) => {
             this.servresp = new TokenResp(data.text, data.good);
@@ -72,11 +75,13 @@ export class UserComponent {
               this.reg = false;
               localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
               this.servresp.text = <string>localStorage.getItem("AlToken");
+              this.router.navigateByUrl("/test");
             }
             else {
               this.passdone = true;
             }
           },
+
           error: error => console.log(error)
         });
     }

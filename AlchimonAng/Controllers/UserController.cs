@@ -9,7 +9,6 @@ using System.Security.Claims;
 
 
 //Что если авторизацию и регистрацию встроить ngif'ом в nav-menu, а router-outlet в router-outlet отображать, если авторизация прошла
-// Не забыть поменять адрес у запроса на регистрацию
 
 
 namespace AlchimonAng.Controllers;
@@ -31,11 +30,11 @@ public class UserController : ControllerBase
     }
 
     
-    [HttpPost]
-    public async Task<AuthenticationRespViewModel> RegConfarm([FromBody] Player player)
+    [HttpPost("Registration")]
+    public async Task<IActionResult> Registration([FromBody] UserViewModel player)
     {
-        var validble = true;
         string errorMessages = "";
+
         if (!ModelState.IsValid)
         {
             foreach (var item in ModelState)
@@ -50,18 +49,19 @@ public class UserController : ControllerBase
                     }
                 }
             }
-            return new AuthenticationRespViewModel { Good=false, Text = errorMessages };
+            return Ok(new AuthenticationRespViewModel { Good=false, Text = errorMessages });
         }
 
         AuthenticationRespViewModel regPlayer;
         try
         {
-            regPlayer = await _uService.Registration(player);
-            return regPlayer;
+            Player newplayer = new Player { Email=player.Email, Password=player.Password};
+            regPlayer = await _uService.Registration(newplayer);
+            return Ok(regPlayer);
         }
         catch (Exception e)
         {
-            return new AuthenticationRespViewModel { Good = false, Text = e.Message };
+            return Ok(new AuthenticationRespViewModel { Good = false, Text = e.Message });
         }
     }
 
@@ -70,7 +70,6 @@ public class UserController : ControllerBase
     public async Task<AuthenticationRespViewModel> Authorize([FromBody] UserViewModel user)
     {
         Console.WriteLine("Зашли в autorization");
-        var resp = await (new StreamReader(Request.Body)).ReadToEndAsync();
         return await _uService.Authentication(user.Email, user.Password);
     }
 

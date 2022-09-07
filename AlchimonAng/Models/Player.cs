@@ -17,10 +17,6 @@ namespace AlchimonAng.Models
         public int? Money { get; set; }
         public Dictionary<int, Alchemon>? Karman { get; set; }
 
-        public Player()
-        {
-
-        }
 
 
 

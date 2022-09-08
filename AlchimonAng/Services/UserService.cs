@@ -11,8 +11,8 @@ namespace AlchimonAng.Services
 {
     public interface IUserService
     {
-        Task<AuthenticationRespViewModel> Registration(Player newPlayer);
-        Task<AuthenticationRespViewModel> Authentication(string nik, string password);
+        Task<BoolTextRespViewModel> Registration(Player newPlayer);
+        Task<BoolTextRespViewModel> Authentication(string nik, string password);
         string GetRoster();
         Player GetPlayer(string id);
         Task PutPlayer(Player player);
@@ -28,7 +28,7 @@ namespace AlchimonAng.Services
             _playerRepository = playerRepository;
         }
 
-        public async Task<AuthenticationRespViewModel> Registration(Player newPlayer)
+        public async Task<BoolTextRespViewModel> Registration(Player newPlayer)
         {
             var roster = _playerRepository.GetList().Result;
             var exist = roster.FirstOrDefault(p => p.Email == newPlayer.Email);
@@ -58,15 +58,15 @@ namespace AlchimonAng.Services
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return new AuthenticationRespViewModel { Good = true, Text = encodedJwt };
+            return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
 
         }
 
-        public async Task<AuthenticationRespViewModel> Authentication(string email, string password)
+        public async Task<BoolTextRespViewModel> Authentication(string email, string password)
         {
             password = HashEbota(password);
             Player? player = _playerRepository.GetList().Result.FirstOrDefault(p => p.Email.ToLower() == email.ToLower() && p.Password == password);
-            if (player is null) return new AuthenticationRespViewModel { Good = false, Text = "Неверный логин или пароль" };
+            if (player is null) return new BoolTextRespViewModel { Good = false, Text = "Неверный логин или пароль" };
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, player.Nik),
@@ -81,7 +81,7 @@ namespace AlchimonAng.Services
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             Console.WriteLine(encodedJwt);
-            return new AuthenticationRespViewModel { Good = true, Text = encodedJwt };
+            return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
         }
 
         public string GetRoster()

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NavMenuService } from '../nav-menu/nav-menu.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -9,21 +10,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 @Injectable()
 export class NavMenuComponent {
-  myname: string = "AlchimonAng";
-  constructor(private http: HttpClient) { }
-  trygetname() {
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) this.myname = data.text;
-        },
-        error: error => console.log(error)
-      });
-  }
-  ngOnInit() {
+  constructor(private http: HttpClient, private navser: NavMenuService) {
     
-    this.trygetname();
+  }
+
+  navsercon: NavMenuService = this.navser;
+  
+  ngOnInit() {
+
+    this.navsercon.trygetname();
 
   }
 

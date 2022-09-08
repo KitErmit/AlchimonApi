@@ -7,10 +7,12 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { NavMenuService } from './nav-menu/nav-menu.service';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AdminComponent } from './admin/admin.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { ProfileComponent } from './profile/profile.component';
     FetchDataComponent,
     UserComponent,
     ProfileComponent,
+    AdminComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -32,7 +35,7 @@ import { ProfileComponent } from './profile/profile.component';
       { path: 'my-profile', component: ProfileComponent },
     ])
   ],
-  providers: [NavMenuComponent],
+  providers: [NavMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

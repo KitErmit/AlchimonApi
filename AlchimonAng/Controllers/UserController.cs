@@ -97,12 +97,7 @@ public class UserController : ControllerBase
         else return Ok(new BoolTextRespViewModel { Good = false, Text = "Что-то не так в AuthValid" });
     }
 
-    [Authorize(Roles = RoleConsts.God)] // 
-    [HttpGet("GetRoster")]
-    public string GitRoster()
-    {
-        return _uService.GetRoster();
-    }
+    
 
     [Authorize]
     [HttpGet("getplayer")]

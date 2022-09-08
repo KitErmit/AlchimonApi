@@ -1,1 +1,17 @@
-<h1 id="tableLabel">Биба</h1>
+<h1 id="tableLabel">{{test}}</h1>
+<table>
+    <tr>
+        <td>Id</td>
+        <td>Nik</td>
+        <td>Email</td>
+        <td>Role</td>
+        <td>Delet</td>
+    </tr>
+    <tr *ngFor="let item of roster">
+        <td>{{item.id}}</td>
+        <td>{{item.nik}}</td>
+        <td>{{item.email}}</td>
+        <td>{{item.role}}</td>
+        <td><button class="btn btn-default" (click)="delet(item)">удалить</button></td>
+    </tr>
+</table>

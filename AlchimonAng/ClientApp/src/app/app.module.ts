@@ -33,6 +33,7 @@ import { AdminComponent } from './admin/admin.component';
       { path: '', component: ProfileComponent},
       { path: 'authorize', component: UserComponent },
       { path: 'my-profile', component: ProfileComponent },
+      { path: 'admin', component: AdminComponent },
     ])
   ],
   providers: [NavMenuService],

@@ -13,7 +13,7 @@ namespace AlchimonAng.Services
     {
         Task<BoolTextRespViewModel> Registration(Player newPlayer);
         Task<BoolTextRespViewModel> Authentication(string nik, string password);
-        string GetRoster();
+        Task<IList<Player>> GetRoster();
         Player GetPlayer(string id);
         Task PutPlayer(Player player);
     }
@@ -84,13 +84,9 @@ namespace AlchimonAng.Services
             return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
         }
 
-        public string GetRoster()
+        public async Task<IList<Player>> GetRoster()
         {
-            return string.Join
-                (
-                "\n\n",
-                _playerRepository.GetList().Result.Select(kv => kv.ToString()).ToArray()
-                );
+            return await _playerRepository.GetList();
         }
 
         public Player GetPlayer(string id)

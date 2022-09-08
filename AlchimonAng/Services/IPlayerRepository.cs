@@ -9,7 +9,7 @@ namespace AlchimonAng.Services
         Task<Player> GetOne(string id); // получение одного объекта по id
         Task Create(Player newPlayer); // создание объекта
         Task Update(Player updatePlayer); // обновление объекта
-        Task Delete(string id);
+        Task<Task> Delete(string id);
     }
 
     public class JsonPlayerRepository : IPlayerRepository
@@ -52,9 +52,11 @@ namespace AlchimonAng.Services
             _roster.Clear();
             return Task.CompletedTask;
         }
-        public Task Delete(string id)
+        public async Task<Task> Delete(string id)
         {
             _roster = _saveLoader.Load(_path);
+            Player player = await GetOne(id);
+            Console.WriteLine(player.Nik + "Удален");
             _roster.Remove(id);
             _saveLoader.Save(_roster, _path);
             _roster.Clear();

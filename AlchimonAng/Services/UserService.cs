@@ -86,7 +86,9 @@ namespace AlchimonAng.Services
 
         public async Task<IList<Player>> GetRoster()
         {
-            return await _playerRepository.GetList();
+            var list = await _playerRepository.GetList();
+
+            return list;
         }
 
         public Player GetPlayer(string id)

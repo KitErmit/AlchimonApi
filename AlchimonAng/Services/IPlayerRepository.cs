@@ -25,7 +25,7 @@ namespace AlchimonAng.Services
         }
         public Task<IList<Player>> GetList()
         {
-            return Task.FromResult((IList<Player>)_saveLoader.Load(_path).Select(p => p.Value).ToList());
+            return Task.FromResult((IList<Player>)_saveLoader.Load(_path).Select(p => p.Value).OrderBy(p=>p.Nik).ToList());
 
         }
         public Task<Player> GetOne(string id)

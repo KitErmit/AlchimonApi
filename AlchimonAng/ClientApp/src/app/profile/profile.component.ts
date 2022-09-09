@@ -6,7 +6,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavMenuService } from '../nav-menu/nav-menu.service';
 
 export class SimpleResp {
-  constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) { }
+  constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) {
+  }
 }
 
 @Component({

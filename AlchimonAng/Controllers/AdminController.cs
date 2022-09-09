@@ -71,6 +71,15 @@ namespace AlchimonAng.Controllers
 
 
         }
+
+        [Authorize(Roles = RoleConsts.God)] 
+        [HttpGet("filtr")]
+        public async Task<IActionResult> Filtr()
+        {
+            return Ok();
+        }
+
+
     }
 }
 

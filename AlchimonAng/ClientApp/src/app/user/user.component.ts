@@ -91,5 +91,17 @@ export class UserComponent {
     }
     
   }
+
+
+  ngOnInit() {
+    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) this.router.navigateByUrl("/my-profile");
+        },
+        error: error => console.log(error)
+      });
+  }
 }
 

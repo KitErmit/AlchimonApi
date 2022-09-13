@@ -11,6 +11,9 @@ import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
+import { NavMenuService } from './nav-menu/nav-menu.service';
+import { HttpService } from './services/http.service';
+import { NavGuard } from './my.guard';
 
 @NgModule({
   declarations: [
@@ -27,12 +30,12 @@ import { ProfileComponent } from './profile/profile.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: ProfileComponent},
+      { path: '', component: UserComponent},
       { path: 'authorize', component: UserComponent },
-      { path: 'my-profile', component: ProfileComponent },
+      { path: 'my-profile', component: ProfileComponent, canActivate: [NavGuard] },
     ])
   ],
-  providers: [NavMenuComponent],
+  providers: [NavMenuComponent, NavGuard, HttpService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

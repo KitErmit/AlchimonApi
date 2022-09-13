@@ -22,6 +22,7 @@ export class ProfileComponent {
   constructor(private http: HttpClient, private router: Router, private navmen: NavMenuComponent) { }
 
   ngOnInit() {
+    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/authorize");
     const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
       .subscribe({
@@ -31,8 +32,6 @@ export class ProfileComponent {
         },
         error: error => console.log(error)
       });
-
-    
   }
 
   updateProfile() {
@@ -40,6 +39,7 @@ export class ProfileComponent {
     this.http.get('https://localhost:7170/User/getplayer', { headers: myHeaders })
       .subscribe({
         next: (data: any) => {
+          console.log("getplayer сработал " + data.nik);
           this.resp = new SimpleResp(data.id, data.nik, data.email, data.role, data.money);
           this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
           this.navmen.trygetname();

@@ -16,8 +16,8 @@ export class NavMenuService {
     var myhead: string = "asd";
     if (localStorage.getItem("AlToken") !== undefined || localStorage.getItem("AlToken") !== null)
       myhead = String(localStorage.getItem("AlToken"));
-    const myHeaders = new HttpHeaders().set('Authorization', myhead);
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', myhead);
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           if (data.good) {

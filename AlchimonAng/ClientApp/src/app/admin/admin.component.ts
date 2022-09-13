@@ -15,7 +15,7 @@ export class AdminComponent implements OnInit, OnChanges  {
   test: string = "1";
   roster: User[] | undefined;
   fullroser: User[] | undefined;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) { this.name = "kit"; }
 
   
 
@@ -56,6 +56,7 @@ export class AdminComponent implements OnInit, OnChanges  {
         }
       });
   }
+
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
     const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
@@ -80,8 +81,9 @@ export class AdminComponent implements OnInit, OnChanges  {
 
   ngOnChanges(changes: SimpleChanges) {
     console.log('we are here');
-    
+
   }
+  
 }
 
 /*

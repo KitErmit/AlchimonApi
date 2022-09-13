@@ -3,7 +3,7 @@
     class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3"
   >
       <div class="container">
-          <a class="navbar-brand" [routerLink]="['/']">{{myname}}</a>
+          <a class="navbar-brand" [routerLink]="['/']">{{navsercon.myname}}</a>
           <button class="navbar-toggler"
                   type="button"
                   data-toggle="collapse"
@@ -13,7 +13,7 @@
                   (click)="toggle()">
               <span class="navbar-toggler-icon"></span>
           </button>
-          <div *ngIf="authorizeble"
+          <div *ngIf="navsercon.authorizeble"
                class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
                [ngClass]="{ show: isExpanded }">
               <ul class="navbar-nav flex-grow">
@@ -27,7 +27,7 @@
                   </li>
               </ul>
           </div>
-          <div *ngIf="!authorizeble"
+          <div *ngIf="!navsercon.authorizeble"
                class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
                [ngClass]="{ show: isExpanded }">
               <ul class="navbar-nav flex-grow">

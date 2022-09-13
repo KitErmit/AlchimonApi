@@ -6,10 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { Observable, first } from "rxjs";
 import { map } from 'rxjs/operators';
+import { NavMenuService } from './nav-menu/nav-menu.service';
 
 @Injectable()
 export class NavGuard implements CanActivate {
-  constructor(private http: HttpClient, private router: Router, private navmen: NavMenuComponent, private httpserv: HttpService) { }
+  constructor(private http: HttpClient, private router: Router, private navmen: NavMenuService, private httpserv: HttpService) { }
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
     return this.httpserv.getAuthBool()
       .pipe(map((auth: boolean) => {

@@ -35,7 +35,7 @@ import { NavGuard } from './my.guard';
       { path: 'my-profile', component: ProfileComponent, canActivate: [NavGuard] },
     ])
   ],
-  providers: [NavMenuComponent, NavGuard, HttpService],
+  providers: [NavMenuComponent, NavGuard, HttpService, NavMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

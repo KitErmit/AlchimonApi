@@ -1,14 +1,14 @@
 ﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
   <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.service.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/user/user.component.html">
     <Files>
       <File FileName="AlchimonAng/Controllers/UserController.cs" Line="107" Column="1" />
       <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="14" Column="60" />
+      <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="38" Column="70" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="21" Column="29" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="2" Column="17" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="17" Column="155" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/Models/Player.cs" Line="25" Column="1" />
@@ -22,17 +22,17 @@
       <File FileName="AlchimonAng/Base/UserRoster.txt" Line="2" Column="1" />
       <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="8" Column="9" />
       <File FileName="AlchimonAng/ViewModels/AuthenticationRespViewModel.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="42" Column="57" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="26" Column="5" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="17" Column="32" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="28" Column="1" />
       <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="50" Column="56" />
       <File FileName="AlchimonAng/Services/ISaveLoader.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="6" Column="56" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="5" Column="63" />
+      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="4" Column="4" />
+      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="36" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.css" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.server.module.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="16" Column="20" />
+      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="13" Column="95" />
       <File FileName="AlchimonAng/ClientApp/src/app/services/http.service.ts" Line="26" Column="3" />
-      <File FileName="AlchimonAng/ClientApp/src/app/services/nav-menu.service.ts" Line="21" Column="2" />
+      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.service.ts" Line="8" Column="15" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

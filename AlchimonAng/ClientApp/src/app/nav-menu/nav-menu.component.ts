@@ -16,35 +16,17 @@ export class NavMenuComponent {
  
   constructor(private http: HttpClient, private roueter: Router, private navser: NavMenuService) { }
   navsercon: NavMenuService = this.navser;
-  trygetname() {
-    var myhead: string = "asd";
-    if (localStorage.getItem("AlToken") !== undefined || localStorage.getItem("AlToken") !== null)
-      myhead = String(localStorage.getItem("AlToken"));
-    const myHeaders = new HttpHeaders().set('Authorization', myhead);
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) {
-            console.log(data.text + "в trygetname. Тру");
-            this.myname = data.text;
-            this.authorizeble = true;
-          }
-          else {
-            console.log("В trygetname. Фолс");
 
-            this.authorizeble = false;
-            this.myname = "AlchimonAng";
-          }
-        },
-        error: error => console.log(error)
-      });
+  ngOnInit() {
+
+    this.navsercon.trygetname();
+
   }
 
   exit() {
     if (localStorage.getItem("AlToken") !== undefined || localStorage.getItem("AlToken") !== null)
       localStorage.removeItem("AlToken");
-    this.authorizeble = false;
-    this.myname = "AlchimonAng";
+    this.navsercon.trygetname();
     this.roueter.navigateByUrl('');
   }
 
@@ -52,10 +34,6 @@ export class NavMenuComponent {
     this.authorizeble = good;
   }
 
-
-  ngOnInit() {
-    this.trygetname();
-  }
 
   isExpanded = false;
 

@@ -14,7 +14,7 @@
         <input class="form-control" type="password" name="password" [(ngModel)]="otpr.password" #password="ngModel"
                required pattern="(?=^.{8,12}$)((?=.*\d)(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$" />
         <div [hidden]="password.valid || password.untouched" class="alert alert-danger">
-            Пароль должен содержать от 8 до 25 символов, только латинские символы, хотя бы одну заглавную, цифру и спецсимвол
+            Пароль должен содержать от 8 до 25 символов, только латинские символы, хотя бы одну заглавную, цифру и спецсимвол (кроме нижнего подчеркивания)
         </div>
     </div>
     <div class="form-group">

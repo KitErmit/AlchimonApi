@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
+import { NavMenuService } from '../nav-menu/nav-menu.service';
 
 export class SimpleResp {
   constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) { }
@@ -19,7 +20,7 @@ export class ProfileComponent {
 
   resp: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
   bufer: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
-  constructor(private http: HttpClient, private router: Router, private navmen: NavMenuComponent) { }
+  constructor(private http: HttpClient, private router: Router, private navmen: NavMenuService) { }
 
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/authorize");

@@ -6,8 +6,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class NavMenuService {
   authorizeble: boolean = false;
-  myname: string = "AlchimonAng";
-  constructor(private http: HttpClient) { }
+  myname: string | undefined;
+
+  constructor(private http: HttpClient) {
+    this.updateFavicon();
+  }
 
   trygetname() {
     var myhead: string = "asd";
@@ -18,19 +21,21 @@ export class NavMenuService {
       .subscribe({
         next: (data: any) => {
           if (data.good) {
-            console.log(data.text + "в trygetname. Тру");
             this.myname = data.text;
             this.authorizeble = true;
           }
           else {
-            console.log("В trygetname. Фолс");
 
             this.authorizeble = false;
-            this.myname = "AlchimonAng";
+            this.updateFavicon();
           }
         },
         error: error => console.log(error)
       });
   }
 
+  updateFavicon() {
+    this.http.get('assets/navconst.json').subscribe({ next: (data: any) => this.myname = data.name });
+  }
 }
+

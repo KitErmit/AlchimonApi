@@ -5,10 +5,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { NavMenuService } from '../nav-menu/nav-menu.service';
+import { User } from '../models/user'
 
-export class SimpleResp {
-  constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) { }
-}
+
 
 @Component({
   selector: 'app-profile',
@@ -18,8 +17,8 @@ export class ProfileComponent {
 
   putable: boolean = false;
 
-  resp: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
-  bufer: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
+  resp: User = new User("NaN", " ", " ", " ", 0);
+  bufer: User = new User("NaN", " ", " ", " ", 0);
   constructor(private http: HttpClient, private router: Router, private navmen: NavMenuService) { }
 
   ngOnInit() {
@@ -40,9 +39,8 @@ export class ProfileComponent {
     this.http.get('https://localhost:7170/User/getplayer', { headers: myHeaders })
       .subscribe({
         next: (data: any) => {
-          console.log("getplayer сработал " + data.nik);
-          this.resp = new SimpleResp(data.id, data.nik, data.email, data.role, data.money);
-          this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
+          this.resp = new User(data.id, data.nik, data.email, data.role, data.money);
+          this.bufer = new User(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
           this.navmen.trygetname();
         },
         error: error => console.log(error)
@@ -50,7 +48,7 @@ export class ProfileComponent {
     
   }
 
-  submit(bufer: SimpleResp) {
+  submit(bufer: User) {
 
     const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     const body = {
@@ -58,7 +56,6 @@ export class ProfileComponent {
     }
     this.http.put('https://localhost:7170/User/put_nik', body, { headers: myHeaders }).subscribe({
       next: (data: any) => {
-        console.log(data.text);
         this.updateProfile();
         this.revet();
       },
@@ -70,7 +67,7 @@ export class ProfileComponent {
 
   putForm() {
     this.putable = true;
-    this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
+    this.bufer = new User(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
   }
   revet() {
     this.putable = false;

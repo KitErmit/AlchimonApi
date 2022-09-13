@@ -47,7 +47,6 @@ export class UserComponent {
             this.done = true;
             this.auth = false;
             localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
-
             this.servresp.text = "КРАСАВЧЕГ" + <string>localStorage.getItem("AlToken");
             this.router.navigateByUrl("/my-profile");
           }

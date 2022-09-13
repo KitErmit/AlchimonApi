@@ -11,28 +11,24 @@ import { NavMenuService } from '../nav-menu/nav-menu.service';
 })
 @Injectable()
 export class NavMenuComponent {
-  authorizeble: boolean = false;
-  myname: string = "AlchimonAng";
  
-  constructor(private http: HttpClient, private roueter: Router, private navser: NavMenuService) { }
-  navsercon: NavMenuService = this.navser;
+  constructor(private http: HttpClient, private roueter: Router, private navService: NavMenuService) { }
+  navServiceConcrate: NavMenuService = this.navService;
 
   ngOnInit() {
 
-    this.navsercon.trygetname();
+    this.navServiceConcrate.trygetname();
 
   }
 
   exit() {
     if (localStorage.getItem("AlToken") !== undefined || localStorage.getItem("AlToken") !== null)
       localStorage.removeItem("AlToken");
-    this.navsercon.trygetname();
+    this.navServiceConcrate.trygetname();
     this.roueter.navigateByUrl('');
   }
 
-  authMenu(good: boolean) {
-    this.authorizeble = good;
-  }
+  
 
 
   isExpanded = false;

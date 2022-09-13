@@ -16,40 +16,12 @@ export class NavGuard implements CanActivate {
       .pipe(map((auth: boolean) => {
         if (auth) {
           this.navmen.trygetname();
-          console.log('authenticated');
           return true;
         }
         this.navmen.trygetname();
-        console.log('not authenticated');
         this.router.navigateByUrl('/authorize');
         return false;
       }));
    
   }
 }
-
-/*
-subscribe({
-  next: (data: boolean) => {
-    var good = data;
-    if (good) this.navmen.authorizeble = true;
-    else this.navmen.authorizeble = false;
-    return good;
-
-  }
-  
-});
-
-
-
-.map((auth: boolean) => {
-        if (auth) {
-          this.navmen.authorizeble = true;
-          console.log('authenticated');
-          return true;
-        }
-        console.log('not authenticated');
-        this.router.navigateByUrl('/authorize');
-        return false;
-      }).first();
-*/

@@ -11,11 +11,11 @@ namespace AlchimonAng.Services
 {
     public interface IUserService
     {
-        Task<AuthenticationRespViewModel> Registration(Player newPlayer);
-        Task<AuthenticationRespViewModel> Authentication(string nik, string password);
-        string GetRoster();
+        Task<BoolTextRespViewModel> Registration(Player newPlayer);
+        Task<BoolTextRespViewModel> Authentication(string nik, string password);
+        Task<IList<Player>> GetRoster();
         Player GetPlayer(string id);
-        Task PutPlayer(Player player);
+        Task<Player> PutPlayer(Player player);
     }
 
     public class SimpleUserService : IUserService
@@ -28,7 +28,7 @@ namespace AlchimonAng.Services
             _playerRepository = playerRepository;
         }
 
-        public async Task<AuthenticationRespViewModel> Registration(Player newPlayer)
+        public async Task<BoolTextRespViewModel> Registration(Player newPlayer)
         {
             var roster = _playerRepository.GetList().Result;
             var exist = roster.FirstOrDefault(p => p.Email == newPlayer.Email);
@@ -41,8 +41,8 @@ namespace AlchimonAng.Services
                 newPlayer.role = RoleConsts.Player;
             newPlayer.Money = 100;
             newPlayer.Karman = new Dictionary<int, Alchemon>();
-            newPlayer.Password = HashEbota(newPlayer.Password);
-            _playerRepository.Create(newPlayer);
+            newPlayer.Password = PasswordToHash(newPlayer.Password);
+            string respID = await _playerRepository.Create(newPlayer);
 
             var claims = new List<Claim>
             {
@@ -58,15 +58,15 @@ namespace AlchimonAng.Services
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-            return new AuthenticationRespViewModel { Good = true, Text = encodedJwt };
+            return new BoolTextRespViewModel { Good = true, Text = $"PlayerID: {respID} JWT: " + encodedJwt };
 
         }
 
-        public async Task<AuthenticationRespViewModel> Authentication(string email, string password)
+        public async Task<BoolTextRespViewModel> Authentication(string email, string password)
         {
-            password = HashEbota(password);
+            password = PasswordToHash(password);
             Player? player = _playerRepository.GetList().Result.FirstOrDefault(p => p.Email.ToLower() == email.ToLower() && p.Password == password);
-            if (player is null) return new AuthenticationRespViewModel { Good = false, Text = "Неверный логин или пароль" };
+            if (player is null) return new BoolTextRespViewModel { Good = false, Text = "Неверный логин или пароль" };
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, player.Nik),
@@ -81,16 +81,14 @@ namespace AlchimonAng.Services
             signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
             var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
             Console.WriteLine(encodedJwt);
-            return new AuthenticationRespViewModel { Good = true, Text = encodedJwt };
+            return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
         }
 
-        public string GetRoster()
+        public async Task<IList<Player>> GetRoster()
         {
-            return string.Join
-                (
-                "\n\n",
-                _playerRepository.GetList().Result.Select(kv => kv.ToString()).ToArray()
-                );
+            var list = await _playerRepository.GetList();
+
+            return list;
         }
 
         public Player GetPlayer(string id)
@@ -100,13 +98,13 @@ namespace AlchimonAng.Services
             return player;
         }
 
-        public async Task PutPlayer(Player player)
+        public async Task<Player> PutPlayer(Player player)
         {
-            await _playerRepository.Update(player);
+            return await _playerRepository.Update(player);
         }
 
 
-        private string HashEbota(string pass)
+        private string PasswordToHash(string pass)
         {
             SHA256 sha256 = SHA256Managed.Create();
             UTF8Encoding objUtf8 = new UTF8Encoding();

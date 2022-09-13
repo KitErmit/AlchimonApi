@@ -29,7 +29,7 @@ public class UserController : ControllerBase
         _playerRepository = playerRepository;
     }
 
-    
+
     [HttpPost("Registration")]
     public async Task<IActionResult> Registration([FromBody] UserViewModel player)
     {
@@ -49,49 +49,79 @@ public class UserController : ControllerBase
                     }
                 }
             }
-            return Ok(new AuthenticationRespViewModel { Good=false, Text = errorMessages });
+            return Ok(new BoolTextRespViewModel { Good = false, Text = errorMessages });
         }
 
-        AuthenticationRespViewModel regPlayer;
+        BoolTextRespViewModel regPlayer;
         try
         {
-            Player newplayer = new Player { Email=player.Email, Password=player.Password};
+            Player newplayer = new Player { Email = player.Email, Password = player.Password };
             regPlayer = await _uService.Registration(newplayer);
             return Ok(regPlayer);
         }
         catch (Exception e)
         {
-            return Ok(new AuthenticationRespViewModel { Good = false, Text = e.Message });
+            return Ok(new BoolTextRespViewModel { Good = false, Text = e.Message });
         }
     }
 
 
     [HttpPost("Authorize")]
-    public async Task<AuthenticationRespViewModel> Authorize([FromBody] UserViewModel user)
+    public async Task<BoolTextRespViewModel> Authorize([FromBody] UserViewModel user)
     {
         Console.WriteLine("Зашли в autorization");
         return await _uService.Authentication(user.Email, user.Password);
     }
 
-    [Authorize(Roles = RoleConsts.God)] // 
-    [HttpGet("GetRoster")]
-    public string GitRoster()
+    [HttpGet("AuthValid")]
+    public async Task<IActionResult> AuthValid()
     {
-        return _uService.GetRoster();
+        ClaimsIdentity? identity = User.Identity as ClaimsIdentity;
+        if(!identity.IsAuthenticated) return Ok(new BoolTextRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
+        string? id = identity.FindFirst(ClaimTypes.Country).Value;
+        if (id is null) return Ok(new BoolTextRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
+        else if (id.Length > 1)
+        {
+            try
+            {
+                var pl = _uService.GetPlayer(id);
+                if(pl is not null) return Ok(new BoolTextRespViewModel { Good = true, Text = pl.Nik});
+            }
+            catch(Exception ex)
+            {
+                return Ok(new BoolTextRespViewModel { Good = false, Text = $"{ex.Message}" });
+            }
+            return Ok(new BoolTextRespViewModel { Good = false, Text = $"Не знаю, как оно вышло за пределы трайкэч в AuthValid" });
+        } 
+        else return Ok(new BoolTextRespViewModel { Good = false, Text = "Что-то не так в AuthValid" });
     }
 
     [Authorize]
-    [HttpGet("play")]
+    [HttpGet("getplayer")]
     public Player PlInform()
     {
         var identity = User.Identity as ClaimsIdentity;
-        if (identity is null) return new Player { Email = "клаймсы пусты" };
         string? id = identity.FindFirst(ClaimTypes.Country).Value;
         if (id is null) return new Player { Email = "клаймс ID пуст" };
-        return _uService.GitPlayer(id);
+        return _uService.GetPlayer(id);
+    }
+
+    [Authorize]
+    [HttpPut("put_nik")]
+    public async Task<IActionResult> PutPlayer([FromBody] Player player)
+    {
+        Console.WriteLine(JsonSerializer.Serialize(HttpContext.Request.Headers));
+        var identity = User.Identity as ClaimsIdentity;
+        string? id = identity.FindFirst(ClaimTypes.Country).Value;
+        if (id is null) return Ok(new BoolTextRespViewModel { Good = true, Text = "Клаймс ID в PutPlayer пусты" });
+        Player newpl = _uService.GetPlayer(id);
+        newpl.Nik = player.Nik;
+        var serResp = await _uService.PutPlayer(newpl);
+        newpl = _uService.GetPlayer(newpl.Id);
+        return Ok(new BoolTextRespViewModel { Good = true, Text = $"Готово. {serResp.Nik} id: {serResp.Id}" });
     }
 
 
-    
+
 }
 

@@ -1,0 +1,27 @@
+<div *ngIf="!putable">
+    <h1>ЗДАРОВА, {{resp?.nik}}!</h1>
+    <p>ID: {{resp?.id}}</p>
+    <p>EMAIL: {{resp?.email}}</p>
+    <p>ROLE: {{resp?.role}}</p>
+    <p>Karman: {{resp?.money}}</p>
+    <button class="btn btn-default" (click)="putForm()">Редактировать</button>
+</div>
+
+
+<div *ngIf="putable">
+    <div class="form-group">
+        <label>Nik</label>
+        <input class="form-control" name="email" [(ngModel)]="bufer.nik" #nik="ngModel"
+               required />
+        <div [hidden]="nik.valid || nik.untouched" class="alert alert-danger">
+            Поле должно быть заполнено
+        </div>
+    </div>
+        <div class="form-group">
+            <button [disabled]="nik.invalid" class="btn btn-default" (click)="submit(bufer)">Сохранить</button>
+            <p> или </p>
+            <button class="btn btn-default" (click)="revet()">отменить</button>
+        </div>
+    
+    
+</div>

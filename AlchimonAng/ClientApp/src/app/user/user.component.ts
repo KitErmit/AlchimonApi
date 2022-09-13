@@ -16,8 +16,8 @@ export class UserComponent {
   servresp: TokenResp = new TokenResp("Pusto", false);
 
   done: boolean = false;
-  reg: boolean = true;
-  auth: boolean = false;
+  reg: boolean = false;
+  auth: boolean = true;
   passdone: boolean = false;
   otpr: User = new User(" ", " ", " ");
   user: User | undefined;
@@ -47,9 +47,8 @@ export class UserComponent {
             this.done = true;
             this.auth = false;
             localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
-
             this.servresp.text = "КРАСАВЧЕГ" + <string>localStorage.getItem("AlToken");
-            this.router.navigateByUrl("/test");
+            this.router.navigateByUrl("/my-profile");
           }
           else {
             this.passdone = true;
@@ -75,7 +74,7 @@ export class UserComponent {
               this.reg = false;
               localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
               this.servresp.text = <string>localStorage.getItem("AlToken");
-              this.router.navigateByUrl("/test");
+              this.router.navigateByUrl("/my-profile");
             }
             else {
               this.passdone = true;
@@ -90,6 +89,18 @@ export class UserComponent {
       this.passdone = true;
     }
     
+  }
+
+
+  ngOnInit() {
+    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) this.router.navigateByUrl("/my-profile");
+        },
+        error: error => console.log(error)
+      });
   }
 }
 

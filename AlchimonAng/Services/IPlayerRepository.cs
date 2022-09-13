@@ -7,9 +7,9 @@ namespace AlchimonAng.Services
     {
         Task<IList<Player>> GetList(); // получение всех объектов
         Task<Player> GetOne(string id); // получение одного объекта по id
-        Task Create(Player newPlayer); // создание объекта
-        Task Update(Player updatePlayer); // обновление объекта
-        Task Delete(string id);
+        Task<string> Create(Player newPlayer); // создание объекта
+        Task<Player> Update(Player updatePlayer); // обновление объекта
+        Task<Task> Delete(string id);
     }
 
     public class JsonPlayerRepository : IPlayerRepository
@@ -18,14 +18,14 @@ namespace AlchimonAng.Services
 
         private const string _path = "Base/UserRoster.txt";
 
-        private Dictionary<string, Player> _roster = new();
+
         public JsonPlayerRepository(ISaveLoader<Dictionary<string, Player>> saveLoader)
         {
             _saveLoader = saveLoader;
         }
         public Task<IList<Player>> GetList()
         {
-            return Task.FromResult((IList<Player>)_saveLoader.Load(_path).Select(p => p.Value).ToList());
+            return Task.FromResult((IList<Player>)_saveLoader.Load(_path).Select(p => p.Value).OrderBy(p => p.Nik).ToList());
 
         }
         public Task<Player> GetOne(string id)
@@ -34,25 +34,29 @@ namespace AlchimonAng.Services
             return Task.FromResult(keyVal.Value);
 
         }
-        public Task Create(Player newPlayer)
+        public async Task<string> Create(Player newPlayer) //Возвращаем айди
         {
-            _roster = _saveLoader.Load(_path);
+            Dictionary<string, Player> _roster = _saveLoader.Load(_path);
             _roster.Add(newPlayer.Id, newPlayer);
             _saveLoader.Save(_roster, _path);
-            _roster.Clear();
-            return Task.CompletedTask;
+            var pl = _roster.Select(a => a.Value).FirstOrDefault(a => a.Email == newPlayer.Email);
+            return pl.Id;
         }
-        public Task Update(Player updatePlayer)
+        public async Task<Player> Update(Player updatePlayer)
         {
-            var oldVersion = _saveLoader.Load(_path).FirstOrDefault(a => a.Key == updatePlayer.Id).Value;
-            oldVersion = updatePlayer;
+            Dictionary<string, Player> _roster = _saveLoader.Load(_path);
+            var oldVersion = _roster.FirstOrDefault(a => a.Key == updatePlayer.Id).Value;
+            _roster.Remove(oldVersion.Id);
+            _roster.Add(updatePlayer.Id, updatePlayer);
             _saveLoader.Save(_roster, _path);
-            _roster.Clear();
-            return Task.CompletedTask;
+            var returnablePl = _roster[updatePlayer.Id];
+            return returnablePl;
         }
-        public Task Delete(string id)
+        public async Task<Task> Delete(string id)
         {
-            _roster = _saveLoader.Load(_path);
+            Dictionary<string, Player> _roster = _saveLoader.Load(_path);
+            Player player = await GetOne(id);
+            Console.WriteLine(player.Nik + "Удален");
             _roster.Remove(id);
             _saveLoader.Save(_roster, _path);
             _roster.Clear();
@@ -60,4 +64,3 @@ namespace AlchimonAng.Services
         }
     }
 }
-

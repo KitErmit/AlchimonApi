@@ -10,7 +10,10 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
-import { TestComponent } from './test/test.component';
+import { ProfileComponent } from './profile/profile.component';
+import { NavMenuService } from './nav-menu/nav-menu.service';
+import { HttpService } from './services/http.service';
+import { NavGuard } from './my.guard';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,7 @@ import { TestComponent } from './test/test.component';
     HomeComponent,
     FetchDataComponent,
     UserComponent,
-    TestComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -27,13 +30,12 @@ import { TestComponent } from './test/test.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'user', component: UserComponent },
-      { path: 'test', component: TestComponent },
+      { path: '', component: UserComponent},
+      { path: 'authorize', component: UserComponent },
+      { path: 'my-profile', component: ProfileComponent, canActivate: [NavGuard] },
     ])
   ],
-  providers: [],
+  providers: [NavMenuComponent, NavGuard, HttpService, NavMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

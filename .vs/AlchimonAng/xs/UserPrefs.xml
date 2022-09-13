@@ -1,10 +1,8 @@
 ﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/admin/admin.component.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Controllers/UserController.cs">
     <Files>
-      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="79" Column="9" />
+      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="125" Column="47" />
       <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="37" Column="7" />
@@ -14,7 +12,7 @@
       <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/Models/Player.cs" Line="25" Column="1" />
-      <File FileName="AlchimonAng/Services/UserService.cs" Line="89" Column="49" />
+      <File FileName="AlchimonAng/Services/UserService.cs" Line="45" Column="71" />
       <File FileName="AlchimonAng/Program.cs" Line="41" Column="44" />
       <File FileName="AlchimonAng/appsettings.json" Line="1" Column="1" />
       <File FileName="AlchimonAng/Properties/launchSettings.json" Line="1" Column="1" />
@@ -25,7 +23,7 @@
       <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="8" Column="9" />
       <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="8" Column="26" />
       <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="23" Column="80" />
-      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="28" Column="124" />
+      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="62" Column="29" />
       <File FileName="AlchimonAng/Services/ISaveLoader.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="6" Column="65" />
       <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="19" Column="15" />
@@ -43,12 +41,13 @@
             <Node name="AlchimonAng" expanded="True">
               <Node name="Base" expanded="True" />
               <Node name="ClientApp" expanded="True">
-                <Node name="src" expanded="True">
-                  <Node name="app" expanded="True">
-                    <Node name="admin" expanded="True" />
-                    <Node name="profile" expanded="True" />
-                    <Node name="user" expanded="True" />
+                <Node name=".angular" expanded="True">
+                  <Node name="cache" expanded="True">
+                    <Node name="13.3.4" expanded="True" />
                   </Node>
+                </Node>
+                <Node name="src" expanded="True">
+                  <Node name="app" expanded="True" />
                 </Node>
               </Node>
               <Node name="Controllers" expanded="True" />
@@ -66,5 +65,7 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
 </Properties>

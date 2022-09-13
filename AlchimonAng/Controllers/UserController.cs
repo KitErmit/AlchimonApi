@@ -121,9 +121,9 @@ public class UserController : ControllerBase
         if (id is null) return Ok(new BoolTextRespViewModel { Good = true, Text = "Клаймс ID в PutPlayer пусты" });
         Player newpl = _uService.GetPlayer(id);
         newpl.Nik = player.Nik;
-        await _uService.PutPlayer(newpl);
+        var serResp = await _uService.PutPlayer(newpl);
         newpl = _uService.GetPlayer(newpl.Id);
-        return Ok(new BoolTextRespViewModel { Good=true, Text = $"Готово. {newpl.Nik}"});
+        return Ok(new BoolTextRespViewModel { Good=true, Text = $"Готово. {serResp.Nik} id: {serResp.Id}" });
     }
 
 

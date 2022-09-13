@@ -3,12 +3,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { NavMenuService } from '../nav-menu/nav-menu.service';
+import { User } from '../models/user'
 
-export class SimpleResp {
-  constructor(public id: string, public nik: string, public email: string, public role: string, public money: number) {
-  }
-}
 
 @Component({
   selector: 'app-profile',
@@ -17,15 +15,14 @@ export class SimpleResp {
 export class ProfileComponent {
 
   putable: boolean = false;
-
-  resp: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
-  bufer: SimpleResp = new SimpleResp("Xyita", " ", " ", " ", 0);
+  resp: User = new User("NaN", " ", " ", " ", 0);
+  bufer: User = new User("NaN", " ", " ", " ", 0);
   constructor(private http: HttpClient, private router: Router, private navmen: NavMenuService) { }
 
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/authorize");
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           if (data.good) this.updateProfile();
@@ -33,17 +30,15 @@ export class ProfileComponent {
         },
         error: error => console.log(error)
       });
-
-    
   }
 
   updateProfile() {
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/getplayer', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/getplayer', { headers: Headers })
       .subscribe({
         next: (data: any) => {
-          this.resp = new SimpleResp(data.id, data.nik, data.email, data.role, data.money);
-          this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
+          this.resp = new User(data.id, data.nik, data.email, data.role, data.money);
+          this.bufer = new User(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
           this.navmen.trygetname();
         },
         error: error => {
@@ -55,15 +50,14 @@ export class ProfileComponent {
     
   }
 
-  submit(bufer: SimpleResp) {
+  submit(bufer: User) {
 
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     const body = {
       id: bufer.id, nik: bufer.nik
     }
-    this.http.put('https://localhost:7170/User/put_nik', body, { headers: myHeaders }).subscribe({
+    this.http.put('https://localhost:7170/User/put_nik', body, { headers: Headers }).subscribe({
       next: (data: any) => {
-        console.log(data.text);
         this.updateProfile();
         this.revet();
       },
@@ -75,7 +69,7 @@ export class ProfileComponent {
 
   putForm() {
     this.putable = true;
-    this.bufer = new SimpleResp(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
+    this.bufer = new User(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
   }
   revet() {
     this.putable = false;

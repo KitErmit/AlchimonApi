@@ -18,7 +18,6 @@ namespace AlchimonAng.Services
 
         private const string _path = "Base/UserRoster.txt";
 
-        
         public JsonPlayerRepository(ISaveLoader<Dictionary<string, Player>> saveLoader)
         {
             _saveLoader = saveLoader;
@@ -64,4 +63,3 @@ namespace AlchimonAng.Services
         }
     }
 }
-

@@ -8,8 +8,6 @@ using System.Text.Json;
 using System.Security.Claims;
 
 
-//Что если авторизацию и регистрацию встроить ngif'ом в nav-menu, а router-outlet в router-outlet отображать, если авторизация прошла
-
 
 namespace AlchimonAng.Controllers;
 
@@ -29,7 +27,7 @@ public class UserController : ControllerBase
         _playerRepository = playerRepository;
     }
 
-    
+
     [HttpPost("Registration")]
     public async Task<IActionResult> Registration([FromBody] UserViewModel player)
     {
@@ -55,7 +53,7 @@ public class UserController : ControllerBase
         BoolTextRespViewModel regPlayer;
         try
         {
-            Player newplayer = new Player { Email=player.Email, Password=player.Password};
+            Player newplayer = new Player { Email = player.Email, Password = player.Password };
             regPlayer = await _uService.Registration(newplayer);
             return Ok(regPlayer);
         }
@@ -78,7 +76,6 @@ public class UserController : ControllerBase
     {
         ClaimsIdentity? identity = User.Identity as ClaimsIdentity;
         if(!identity.IsAuthenticated) return Ok(new BoolTextRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
-        if (identity is null) return Ok(new BoolTextRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
         string? id = identity.FindFirst(ClaimTypes.Country).Value;
         if (id is null) return Ok(new BoolTextRespViewModel { Good = false, Text = "Клаймс ID в AuthValid пусты" });
         else if (id.Length > 1)
@@ -97,14 +94,12 @@ public class UserController : ControllerBase
         else return Ok(new BoolTextRespViewModel { Good = false, Text = "Что-то не так в AuthValid" });
     }
 
-    
 
     [Authorize]
     [HttpGet("getplayer")]
     public Player PlInform()
     {
         var identity = User.Identity as ClaimsIdentity;
-        if (identity is null) return new Player { Email = "клаймсы пусты" };
         string? id = identity.FindFirst(ClaimTypes.Country).Value;
         if (id is null) return new Player { Email = "клаймс ID пуст" };
         return _uService.GetPlayer(id);
@@ -116,7 +111,6 @@ public class UserController : ControllerBase
     {
         Console.WriteLine(JsonSerializer.Serialize(HttpContext.Request.Headers));
         var identity = User.Identity as ClaimsIdentity;
-        if (identity is null) throw new Exception("Клаймсы в PutPlayer пусты");
         string? id = identity.FindFirst(ClaimTypes.Country).Value;
         if (id is null) return Ok(new BoolTextRespViewModel { Good = true, Text = "Клаймс ID в PutPlayer пусты" });
         Player newpl = _uService.GetPlayer(id);
@@ -127,6 +121,6 @@ public class UserController : ControllerBase
     }
 
 
-    
+
 }
 

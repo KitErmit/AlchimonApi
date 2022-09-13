@@ -13,6 +13,8 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AdminComponent } from './admin/admin.component';
+import { HttpService } from './services/http.service';
+import { NavGuard } from './my.guard';
 
 @NgModule({
   declarations: [
@@ -30,13 +32,13 @@ import { AdminComponent } from './admin/admin.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: ProfileComponent},
+      { path: '', component: UserComponent},
       { path: 'authorize', component: UserComponent },
-      { path: 'my-profile', component: ProfileComponent },
+      { path: 'my-profile', component: ProfileComponent, canActivate: [NavGuard] },
       { path: 'admin', component: AdminComponent },
     ])
   ],
-  providers: [NavMenuService],
+  providers: [NavMenuComponent, NavGuard, HttpService, NavMenuService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

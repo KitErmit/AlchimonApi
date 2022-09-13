@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { SimpleResp } from '../profile/profile.component';
+import { User } from '../models/user'
 
 
 
@@ -10,11 +10,11 @@ import { SimpleResp } from '../profile/profile.component';
   templateUrl: './admin.component.html'
 })
 
-export class AdminComponent implements OnInit, OnChanges {
-  @Input() name: string = "";
+export class AdminComponent implements OnInit, OnChanges  {
+  @Input() name: string | undefined;
   test: string = "1";
-  roster: SimpleResp[] | undefined;
-  fullroser: SimpleResp[] | undefined;
+  roster: User[] | undefined;
+  fullroser: User[] | undefined;
   constructor(private http: HttpClient, private router: Router) { }
 
   
@@ -25,8 +25,8 @@ export class AdminComponent implements OnInit, OnChanges {
 
 
   updatedata() {
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/Admin/GetRoster', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/Admin/GetRoster', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           this.roster = data;
@@ -38,10 +38,10 @@ export class AdminComponent implements OnInit, OnChanges {
       });
   }
 
-  delet(item: SimpleResp) {
+  delet(item: User) {
     const body = { good: true, text: item.id };
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.post('https://localhost:7170/Admin/delet', body, { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.post('https://localhost:7170/Admin/delet', body, { headers: Headers })
       .subscribe({
         next: (data: any) => {
           if (data.good) {
@@ -58,10 +58,10 @@ export class AdminComponent implements OnInit, OnChanges {
   }
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
 
 
-    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: myHeaders })
+    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           if (data.good) {
@@ -77,25 +77,28 @@ export class AdminComponent implements OnInit, OnChanges {
         }
       });
   }
-  
+
   ngOnChanges(changes: SimpleChanges) {
-    for (let propName in changes) {
-
-      var here = changes[propName];
-      let cur = JSON.stringify(here.currentValue);
-      let prev = JSON.stringify(here.previousValue);
-      console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-      if (here.currentValue !== "" || here.currentValue !== " " || here.currentValue !== null || here.currentValue !== undefined) {
-
-        this.roster = this.fullroser?.filter(function (value: SimpleResp, index: number, thisArray: SimpleResp[]) => {
-          return value.id.startsWith(here.currentValue);
-        });
-      }
-
-    }
+    console.log('we are here');
+    
   }
-
-  
 }
 
+/*
+ngOnChanges(changes: SimpleChanges) {
+  for (let propName in changes) {
 
+    var here = changes[propName];
+    let cur = JSON.stringify(here.currentValue);
+    let prev = JSON.stringify(here.previousValue);
+    console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
+    if (here.currentValue !== "" || here.currentValue !== " " || here.currentValue !== null || here.currentValue !== undefined) {
+
+      this.roster = this.fullroser?.filter(function (value: User, index: number, thisArray: User[]) => {
+         return value.id.startsWith(here.currentValue);
+       }); 
+    }
+
+  }
+}
+*/

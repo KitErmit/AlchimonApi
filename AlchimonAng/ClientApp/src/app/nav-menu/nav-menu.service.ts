@@ -5,18 +5,37 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable()
 export class NavMenuService {
-  myname: string = "AlchimonAng";
-  constructor(private http: HttpClient) { }
+  authorizeble: boolean = false;
+  myname: string | undefined;
+
+  constructor(private http: HttpClient) {
+    this.updateFavicon();
+  }
+
   trygetname() {
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+    var myhead: string = "asd";
+    if (localStorage.getItem("AlToken") !== undefined || localStorage.getItem("AlToken") !== null)
+      myhead = String(localStorage.getItem("AlToken"));
+    const Headers = new HttpHeaders().set('Authorization', myhead);
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
       .subscribe({
         next: (data: any) => {
-          if (data.good) this.myname = data.text;
+          if (data.good) {
+            this.myname = data.text;
+            this.authorizeble = true;
+          }
+          else {
+
+            this.authorizeble = false;
+            this.updateFavicon();
+          }
         },
         error: error => console.log(error)
       });
   }
 
+  updateFavicon() {
+    this.http.get('assets/navconst.json').subscribe({ next: (data: any) => this.myname = data.name });
+  }
 }
 

@@ -19,7 +19,7 @@ export class UserComponent {
   reg: boolean = false;
   auth: boolean = true;
   passdone: boolean = false;
-  otpr: User = new User(" ", " ", " ");
+  otpr: User = new User("", "", "");
   user: User | undefined;
 
   constructor(private http: HttpClient, private router: Router) { }
@@ -36,9 +36,9 @@ export class UserComponent {
 
 
   authsubmit(otpr: User) {
-    const myHeaders = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
+    const Headers = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
     const body = { email: otpr.email, password: otpr.password, passconf: otpr.passconf };
-    this.http.post('https://localhost:7170/User/Authorize', body, { headers: myHeaders })
+    this.http.post('https://localhost:7170/User/Authorize', body, { headers: Headers })
       .subscribe({
         next: (data: any) => {
           this.servresp = new TokenResp(data.text, data.good);
@@ -47,7 +47,6 @@ export class UserComponent {
             this.done = true;
             this.auth = false;
             localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
-
             this.servresp.text = "КРАСАВЧЕГ" + <string>localStorage.getItem("AlToken");
             this.router.navigateByUrl("/my-profile");
           }
@@ -90,6 +89,18 @@ export class UserComponent {
       this.passdone = true;
     }
     
+  }
+
+
+  ngOnInit() {
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) this.router.navigateByUrl("/my-profile");
+        },
+        error: error => console.log(error)
+      });
   }
 }
 

@@ -11,16 +11,10 @@ export class HttpService {
   getAuthBool(): Observable<boolean> {
     var token = localStorage.getItem("AlToken");
     if (token === null || token === undefined) token = "sleep";
-    const myHeaders = new HttpHeaders().set('Authorization', token);
-    return this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders }).pipe(map((data: any) => {
+    const Headers = new HttpHeaders().set('Authorization', token);
+    return this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers }).pipe(map((data: any) => {
       var authable = data.good;
       return authable;
     }));
   }
 }
-
-/*
- return authable.map(function (boo: any): boolean {
-        return boo;
-        )};
-*/

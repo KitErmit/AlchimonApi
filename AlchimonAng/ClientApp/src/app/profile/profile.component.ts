@@ -23,8 +23,8 @@ export class ProfileComponent {
 
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/authorize");
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           if (data.good) this.updateProfile();
@@ -35,8 +35,8 @@ export class ProfileComponent {
   }
 
   updateProfile() {
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/getplayer', { headers: myHeaders })
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    this.http.get('https://localhost:7170/User/getplayer', { headers: Headers })
       .subscribe({
         next: (data: any) => {
           this.resp = new User(data.id, data.nik, data.email, data.role, data.money);
@@ -50,11 +50,11 @@ export class ProfileComponent {
 
   submit(bufer: User) {
 
-    const myHeaders = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     const body = {
       id: bufer.id, nik: bufer.nik
     }
-    this.http.put('https://localhost:7170/User/put_nik', body, { headers: myHeaders }).subscribe({
+    this.http.put('https://localhost:7170/User/put_nik', body, { headers: Headers }).subscribe({
       next: (data: any) => {
         this.updateProfile();
         this.revet();

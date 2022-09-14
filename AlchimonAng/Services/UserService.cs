@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -87,7 +88,10 @@ namespace AlchimonAng.Services
         public async Task<IList<Player>> GetRoster()
         {
             var list = await _playerRepository.GetList();
-
+            var gods = (IList<Player>)list.Where(p => p.role == RoleConsts.God).ToList();
+            var players = (IList<Player>)list.Where(p => p.role == RoleConsts.Player).ToList();
+            list = gods.Concat(players).ToList(); ;
+            // (IList<Player>)_saveLoader.Load(_path).Select(p => p.Value).OrderBy(p => p.Nik).ToList()
             return list;
         }
 

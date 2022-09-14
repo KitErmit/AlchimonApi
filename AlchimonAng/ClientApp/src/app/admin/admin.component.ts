@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { User } from '../models/user'
+import { User } from '../models/user';
 
 
 

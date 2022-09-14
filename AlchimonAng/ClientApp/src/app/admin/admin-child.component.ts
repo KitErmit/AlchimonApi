@@ -1,7 +1,7 @@
 import { Component, Inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { User } from '../models/user'
+import { User } from '../models/user';
 
 
 
@@ -12,43 +12,13 @@ import { User } from '../models/user'
 
 export class AdminChildComponent implements OnInit, OnChanges  {
   @Input() name: string = "";
+  nameForCheck: string = "";
   test: string = "not ok";
   roster: User[] | undefined;
   fullroser: User[] | undefined;
   constructor(private http: HttpClient, private router: Router) { }
 
-  ngOnInit() {
-    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-
-
-    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) {
-            this.test = data.text;
-            this.updatedata();
-          }
-          else this.router.navigateByUrl("/my-profile");
-
-        },
-        error: error => {
-          console.log(error);
-          this.router.navigateByUrl("/my-profile");
-        }
-      });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    
-    
-    if (changes.name.currentValue !== undefined)
-      this.roster = this.fullroser?.filter(item => item.nik.toUpperCase().startsWith(changes.name.currentValue.toUpperCase()));
-    if (this.roster === undefined) {
-      this.roster = this.fullroser;
-    }
-    
-  }
+  
 
 
   
@@ -63,8 +33,15 @@ export class AdminChildComponent implements OnInit, OnChanges  {
     this.http.get('https://localhost:7170/Admin/GetRoster', { headers: Headers })
       .subscribe({
         next: (data: any) => {
-          this.roster = data;
           this.fullroser = data;
+          if (this.nameForCheck === "" ) this.roster = data;
+          else {
+            this.roster = this.fullroser?.filter(item => item.nik.toUpperCase().startsWith(this.nameForCheck.toUpperCase()) );
+            if (this.roster === undefined) {
+              this.roster = this.fullroser;
+            }
+          }
+          
         },
         error: error => {
           console.log(error);
@@ -93,7 +70,40 @@ export class AdminChildComponent implements OnInit, OnChanges  {
 
 
 
-  
+  ngOnInit() {
+    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+
+
+    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) {
+            this.test = data.text;
+            this.updatedata();
+          }
+          else this.router.navigateByUrl("/my-profile");
+
+        },
+        error: error => {
+          console.log(error);
+          this.router.navigateByUrl("/my-profile");
+        }
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+
+
+    if (changes.name.currentValue !== undefined) {
+      this.roster = this.fullroser?.filter(item => item.nik.toUpperCase().startsWith(changes.name.currentValue.toUpperCase()));
+      this.nameForCheck = changes.name.currentValue;
+    }
+    if (this.roster === undefined) {
+      this.roster = this.fullroser;
+    }
+
+  }
 
 
   

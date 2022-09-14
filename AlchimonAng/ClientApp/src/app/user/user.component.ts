@@ -67,7 +67,9 @@ export class UserComponent {
       this.http.post('https://localhost:7170/User/Registration', body, { headers: myHeaders })
         .subscribe({
           next: (data: any) => {
-            this.servresp = new TokenResp(data.text, data.good);
+            var arr = <string[]>data.text.split(" ");
+
+            this.servresp = new TokenResp(arr[arr.length - 1], data.good);
             if (this.servresp.good) {
               this.done = true;
               this.passdone = false;

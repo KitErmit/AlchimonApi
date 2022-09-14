@@ -6,7 +6,7 @@
   <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/admin/admin-child.component.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/user/user.component.ts">
     <Files>
       <File FileName="AlchimonAng/Models/Player.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/WeatherForecast.cs" Line="1" Column="1" />
@@ -17,10 +17,10 @@
       <File FileName="AlchimonAng/ViewModels/BoolTextRespViewModel.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="1" Column="1" />
       <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="41" Column="97" />
-      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="119" Column="47" />
+      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="62" Column="81" />
       <File FileName="AlchimonAng/ClientApp/src/assets/navconst.json" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="45" Column="27" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="72" Column="75" />
       <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/services/http.service.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="8" Column="1" />
@@ -28,21 +28,25 @@
       <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="18" Column="15" />
       <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="43" Column="7" />
       <File FileName="AlchimonAng/ClientApp/src/app/models/user.ts" Line="3" Column="2" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.ts" Line="40" Column="4" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.html" Line="2" Column="27" />
+      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.ts" Line="22" Column="2" />
+      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.html" Line="1" Column="41" />
       <File FileName="AlchimonAng/ClientApp/src/app/fetch-data/fetch-data.component.ts" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/package.json" Line="1" Column="1" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="19" />
       <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="4" Column="36" />
-      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="23" Column="22" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.ts" Line="12" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.html" Line="3" Column="19" />
+      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="13" Column="126" />
+      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.ts" Line="49" Column="6" />
+      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.html" Line="8" Column="27" />
+      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Base/UserRoster.txt" Line="2" Column="1" />
+      <File FileName="AlchimonAng/Services/UserService.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AlchimonAng" expanded="True">
             <Node name="AlchimonAng" expanded="True">
+              <Node name="Base" expanded="True" />
               <Node name="ClientApp" expanded="True">
                 <Node name="src" expanded="True">
                   <Node name="app" expanded="True">
@@ -52,6 +56,8 @@
                     <Node name="models" expanded="True" />
                     <Node name="nav-menu" expanded="True" />
                     <Node name="profile" expanded="True" />
+                    <Node name="services" expanded="True" />
+                    <Node name="user" expanded="True" />
                   </Node>
                   <Node name="assets" expanded="True" />
                 </Node>

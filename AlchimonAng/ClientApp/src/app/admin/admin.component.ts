@@ -10,80 +10,15 @@ import { User } from '../models/user'
   templateUrl: './admin.component.html'
 })
 
-export class AdminComponent implements OnInit, OnChanges  {
+export class AdminComponent implements OnInit, OnChanges {
   name: string = "";
-  test: string = "1";
-  roster: User[] | undefined;
-  fullroser: User[] | undefined;
-  constructor(private http: HttpClient, private router: Router) { }
 
-  ngOnInit() {
-    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-
-
-    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) {
-            this.test = data.text;
-            this.updatedata();
-          }
-          else this.router.navigateByUrl("/my-profile");
-
-        },
-        error: error => {
-          console.log(error);
-          this.router.navigateByUrl("/my-profile");
-        }
-      });
-  }
+  ngOnInit() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log(`changes in parant`);
-
+    console.log("Parant changes");
   }
 
-  
-
-
-
-
-  updatedata() {
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/Admin/GetRoster', { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          this.roster = data;
-          this.fullroser = data;
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
-  }
-
-  delet(item: User) {
-    const body = { good: true, text: item.id };
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.post('https://localhost:7170/Admin/delet', body, { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) {
-            this.updatedata();
-            this.name = "";
-            console.log(data.text);
-          }
-          else alert(data.text);
-        },
-        error: error => {
-          console.log(error);
-        }
-      });
-  }
-
-  
-  
 }
 
 /*

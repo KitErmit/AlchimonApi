@@ -16,6 +16,8 @@ import { AdminComponent } from './admin/admin.component';
 import { HttpService } from './services/http.service';
 import { NavGuard } from './my.guard';
 
+import { AdminChildComponent } from './admin/admin-child.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,6 +27,7 @@ import { NavGuard } from './my.guard';
     UserComponent,
     ProfileComponent,
     AdminComponent,
+    AdminChildComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

@@ -11,13 +11,38 @@ import { User } from '../models/user'
 })
 
 export class AdminComponent implements OnInit, OnChanges  {
-  @Input() name: string | undefined;
+  name: string = "";
   test: string = "1";
   roster: User[] | undefined;
   fullroser: User[] | undefined;
-  constructor(private http: HttpClient, private router: Router) { this.name = "kit"; }
+  constructor(private http: HttpClient, private router: Router) { }
 
-  
+  ngOnInit() {
+    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
+    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+
+
+    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
+      .subscribe({
+        next: (data: any) => {
+          if (data.good) {
+            this.test = data.text;
+            this.updatedata();
+          }
+          else this.router.navigateByUrl("/my-profile");
+
+        },
+        error: error => {
+          console.log(error);
+          this.router.navigateByUrl("/my-profile");
+        }
+      });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(`changes in parant`);
+
+  }
 
   
 
@@ -57,32 +82,7 @@ export class AdminComponent implements OnInit, OnChanges  {
       });
   }
 
-  ngOnInit() {
-    if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-
-
-    this.http.get('https://localhost:7170/Admin/rolecheck', { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) {
-            this.test = data.text;
-            this.updatedata();
-          }
-          else this.router.navigateByUrl("/my-profile");
-
-        },
-        error: error => {
-          console.log(error);
-          this.router.navigateByUrl("/my-profile");
-        }
-      });
-  }
-
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('we are here');
-
-  }
+  
   
 }
 

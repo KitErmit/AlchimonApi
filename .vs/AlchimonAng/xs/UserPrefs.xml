@@ -1,46 +1,21 @@
 ﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/admin/admin-child.component.ts">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Services/JwtBuilderService.cs">
     <Files>
+      <File FileName="AlchimonAng/Services/RegistrationService.cs" Line="52" Column="7" />
+      <File FileName="AlchimonAng/Services/UserService.cs" Line="58" Column="1" />
+      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="31" Column="34" />
+      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Program.cs" Line="45" Column="48" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="84" Column="14" />
       <File FileName="AlchimonAng/Models/Player.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/WeatherForecast.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Program.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/appsettings.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/appsettings.Development.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/.gitignore" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ViewModels/BoolTextRespViewModel.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="28" Column="126" />
-      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="62" Column="81" />
-      <File FileName="AlchimonAng/ClientApp/src/assets/navconst.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="45" Column="27" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="72" Column="75" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/services/http.service.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="8" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.service.ts" Line="39" Column="4" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="18" Column="15" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="43" Column="7" />
-      <File FileName="AlchimonAng/ClientApp/src/app/models/user.ts" Line="3" Column="2" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.ts" Line="4" Column="39" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin.component.html" Line="1" Column="41" />
-      <File FileName="AlchimonAng/ClientApp/src/app/fetch-data/fetch-data.component.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/package.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="19" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="4" Column="36" />
-      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="13" Column="126" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.ts" Line="13" Column="52" />
-      <File FileName="AlchimonAng/ClientApp/src/app/admin/admin-child.component.html" Line="8" Column="27" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Base/UserRoster.txt" Line="2" Column="1" />
-      <File FileName="AlchimonAng/Services/UserService.cs" Line="76" Column="15" />
-      <File FileName="AlchimonAng/Services/AdminService.cs" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Base/UserRoster.txt" Line="1" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="34" Column="1" />
+      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="1" Column="1" />
+      <File FileName="AlchimonAng/Services/JwtBuilderService.cs" Line="15" Column="63" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -51,26 +26,13 @@
               <Node name="ClientApp" expanded="True">
                 <Node name="src" expanded="True">
                   <Node name="app" expanded="True">
-                    <Node name="admin" expanded="True" />
-                    <Node name="fetch-data" expanded="True" />
-                    <Node name="home" expanded="True" />
-                    <Node name="models" expanded="True" />
-                    <Node name="nav-menu" expanded="True" />
-                    <Node name="profile" expanded="True" />
-                    <Node name="services" expanded="True" />
                     <Node name="user" expanded="True" />
                   </Node>
-                  <Node name="assets" expanded="True" />
                 </Node>
               </Node>
               <Node name="Controllers" expanded="True" />
               <Node name="Models" expanded="True" />
-              <Node name="Pages" expanded="True" />
-              <Node name="Properties" expanded="True" />
               <Node name="Services" expanded="True" />
-              <Node name="ViewModels" expanded="True" />
-              <Node name="wwwroot" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -80,4 +42,7 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

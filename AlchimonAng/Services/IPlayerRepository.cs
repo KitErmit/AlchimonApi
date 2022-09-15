@@ -7,7 +7,7 @@ namespace AlchimonAng.Services
     {
         Task<IList<Player>> GetList(); // получение всех объектов
         Task<Player> GetOne(string id); // получение одного объекта по id
-        Task<string> Create(Player newPlayer); // создание объекта
+        Task<Player> Create(Player newPlayer); // создание объекта
         Task<Player> Update(Player updatePlayer); // обновление объекта
         Task<Task> Delete(string id);
     }
@@ -34,13 +34,13 @@ namespace AlchimonAng.Services
             return Task.FromResult(keyVal.Value);
 
         }
-        public async Task<string> Create(Player newPlayer) //Возвращаем айди
+        public async Task<Player> Create(Player newPlayer) //Возвращаем айди
         {
             Dictionary<string, Player> _roster = _saveLoader.Load(_path);
             _roster.Add(newPlayer.Id, newPlayer);
             _saveLoader.Save(_roster, _path);
-            var pl = _roster.Select(a=>a.Value).FirstOrDefault(a => a.Email == newPlayer.Email);
-            return pl.Id;
+            return await GetOne(newPlayer.Id);
+             
         }
         public async Task<Player> Update(Player updatePlayer)
         {

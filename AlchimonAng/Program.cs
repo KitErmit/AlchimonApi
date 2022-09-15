@@ -39,6 +39,10 @@ builder.Services.AddSingleton<ISaveLoader<Dictionary<string, Player>>, JsonLoade
 builder.Services.AddSingleton<ISaveLoader<Alchemon>, JsonLoader<Alchemon>>();
 builder.Services.AddSingleton<IPlayerRepository, JsonPlayerRepository>();
 builder.Services.AddSingleton<IAdminService, SimpleAdminService>();
+builder.Services.AddSingleton<TestService>();
+builder.Services.AddSingleton<RegistrationService>();
+builder.Services.AddSingleton<HashService>();
+builder.Services.AddSingleton<JwtBuilderService>();
 
 var app = builder.Build();
 

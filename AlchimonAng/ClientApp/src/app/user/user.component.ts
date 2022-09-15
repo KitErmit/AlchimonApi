@@ -14,7 +14,7 @@ import { TokenResp } from './tokenresp';
 export class UserComponent {
 
   servresp: TokenResp = new TokenResp("Pusto", false);
-
+  errorMes: string = "Pusto";
   done: boolean = false;
   reg: boolean = false;
   auth: boolean = true;
@@ -67,9 +67,10 @@ export class UserComponent {
       this.http.post('https://localhost:7170/User/Registration', body, { headers: myHeaders })
         .subscribe({
           next: (data: any) => {
-            var arr = <string[]>data.text.split(" ");
 
+            var arr = <string[]>data.text.split(" ");
             this.servresp = new TokenResp(arr[arr.length - 1], data.good);
+            this.errorMes = data.text;
             if (this.servresp.good) {
               this.done = true;
               this.passdone = false;

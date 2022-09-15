@@ -47,6 +47,7 @@
     <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
     <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
     <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
+    <None Remove="ClientApp\.angular\cache\13.3.4\angular-webpack\8cabe505c305692f01f315f4abc1e7986e6b9c5b\index.pack.old" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModels\" />

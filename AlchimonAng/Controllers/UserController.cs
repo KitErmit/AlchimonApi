@@ -31,36 +31,7 @@ public class UserController : ControllerBase
     [HttpPost("Registration")]
     public async Task<IActionResult> Registration([FromBody] UserViewModel player)
     {
-        string errorMessages = "";
-
-        if (!ModelState.IsValid)
-        {
-            foreach (var item in ModelState)
-            {
-                if (item.Value.ValidationState == ModelValidationState.Invalid)
-                {
-                    errorMessages = $"{errorMessages}\nОшибки для свойства {item.Key}:\n";
-                    // пробегаемся по всем ошибкам
-                    foreach (var error in item.Value.Errors)
-                    {
-                        errorMessages = $"{errorMessages}{error.ErrorMessage}\n";
-                    }
-                }
-            }
-            return Ok(new BoolTextRespViewModel { Good=false, Text = errorMessages });
-        }
-
-        BoolTextRespViewModel regPlayer;
-        try
-        {
-            Player newplayer = new Player { Email = player.Email, Password = player.Password };
-            regPlayer = await _uService.Registration(newplayer);
-            return Ok(regPlayer);
-        }
-        catch (Exception e)
-        {
-            return Ok(new BoolTextRespViewModel { Good = false, Text = e.Message });
-        }
+        return Ok(await _uService.Registration(ModelState, player));
     }
 
 

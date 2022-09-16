@@ -1,35 +1,41 @@
 ﻿using System;
 using AlchimonAng.Models;
+using AlchimonAng.Utils.Configs;
 using AlchimonAng.ViewModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
+using System.Linq;
+using AlchimonAng.Utils.Constans;
+using AlchimonAng.DB.Repository;
+using AlchimonAng.Helpers;
+using AlchimonAng.Providers;
 
 namespace AlchimonAng.Services
 {
     public class RegistrationService
     {
         private readonly IPlayerRepository _playerRepository;
-        private readonly HashService _hashService;
-        private readonly JwtBuilderService _jwtBuilder;
+        private readonly HashHepler _hashService;
+        private readonly JwtProvider _jwtBuilder;
+        private readonly AdminConfig _adminConf;
 
-
-        public RegistrationService(IPlayerRepository playerRepository, HashService hashService, JwtBuilderService jwtBuilder)
+        public RegistrationService(IPlayerRepository playerRepository, HashHepler hashService, JwtProvider jwtBuilder, IOptions<AdminConfig> adminConf)
         {
             _playerRepository = playerRepository;
             _hashService = hashService;
             _jwtBuilder = jwtBuilder;
+            _adminConf = adminConf.Value;
         }
 
         public async Task<BoolTextRespViewModel> TryCreateNewPlayer(ModelStateDictionary modelState, UserViewModel newPlayer)
         {
-            
-            var valid = ValidCheck(modelState);
-            var repeatCheck = RepeatEmailCheck(newPlayer.Email);
             Player? playerDone = null;
-            var BeforeCreatePLTasks = Task.WhenAll(valid, repeatCheck);
             string? Jwt = null;
             try
             {
-                await BeforeCreatePLTasks;
+                
+                await RepeatEmailCheck(newPlayer.Email);
+                ValidCheck(modelState);
                 playerDone = await FromVModelToPlayer(newPlayer);
                 var create = _playerRepository.Create(playerDone);
                 var jwtBuild = _jwtBuilder.BuildToken(playerDone);
@@ -38,15 +44,7 @@ namespace AlchimonAng.Services
             }
             catch(Exception ex)
             {
-                string errorMessages = "";
-                if (BeforeCreatePLTasks.Exception is not null)
-                {
-                    foreach (var exception in BeforeCreatePLTasks.Exception.InnerExceptions)
-                    {
-                        errorMessages = errorMessages + "\n" + exception.Message;
-                    }
-                }
-                else errorMessages = ex.Message;
+                string errorMessages = ex.Message;
 #if DEBUG
                 Console.WriteLine(errorMessages);
 #endif
@@ -58,7 +56,7 @@ namespace AlchimonAng.Services
 
         }
 
-        public async Task ValidCheck(ModelStateDictionary modelState)
+        public void ValidCheck(ModelStateDictionary modelState)
         {
             string errorMessages = "";
             if (!modelState.IsValid)
@@ -81,33 +79,24 @@ namespace AlchimonAng.Services
 
         public async Task RepeatEmailCheck(string email)
         {
-            var roster = _playerRepository.GetList().Result;
+            var roster = await _playerRepository.GetList();
             var exist = roster.FirstOrDefault(p => p.Email == email);
             if (exist is not null) throw new Exception("Пользователь с таким Email уже зарегистрирован");
         }
 
         public async Task<Player> FromVModelToPlayer (UserViewModel newPlayer)
         {
-            string role = newPlayer.Email.ToLower() == "ki.termit@gmail.com" || newPlayer.Email.ToLower().StartsWith("421984")
-                ? RoleConsts.God : RoleConsts.Player;
-            string id = Guid.NewGuid().ToString();
-            int i = 0;
-
-            while(await _playerRepository.GetOne(id) is not null)
-            {
-                id = Guid.NewGuid().ToString();
-                i++;
-                if (i > 100) throw new Exception("Гид не может создать уникальный айди");
-            }
+            string role = _adminConf.Emails.Any(e => e == newPlayer.Email)
+                ? PlayerRoleConsts.God : PlayerRoleConsts.Player;
 
             return new Player
             {
-                Id = id,
+                Id = Guid.NewGuid().ToString(),
                 Email = newPlayer.Email.ToLower(),
                 Nik = "Игрок",
-                Password = _hashService.StringToHash(newPlayer.Password),
+                Password = _hashService.StringToSha256(newPlayer.Password),
                 role = role,
-                Money = role == RoleConsts.God ? 1_000_000 : 100,
+                Money = role == PlayerRoleConsts.God ? 1_000_000 : 100,
                 Karman = new Dictionary<int, Alchemon>(),
             };
         }

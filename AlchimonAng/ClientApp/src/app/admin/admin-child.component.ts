@@ -18,16 +18,6 @@ export class AdminChildComponent implements OnInit, OnChanges  {
   fullroser: User[] | undefined;
   constructor(private http: HttpClient, private router: Router) { }
 
-  
-
-
-  
-
-
-
-
-
-
   updatedata() {
     const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
     this.http.get('https://localhost:7170/Admin/GetRoster', { headers: Headers })
@@ -108,22 +98,3 @@ export class AdminChildComponent implements OnInit, OnChanges  {
 
   
 }
-
-/*
-ngOnChanges(changes: SimpleChanges) {
-  for (let propName in changes) {
-
-    var here = changes[propName];
-    let cur = JSON.stringify(here.currentValue);
-    let prev = JSON.stringify(here.previousValue);
-    console.log(`${propName}: currentValue = ${cur}, previousValue = ${prev}`);
-    if (here.currentValue !== "" || here.currentValue !== " " || here.currentValue !== null || here.currentValue !== undefined) {
-
-      this.roster = this.fullroser?.filter(function (value: User, index: number, thisArray: User[]) => {
-         return value.id.startsWith(here.currentValue);
-       }); 
-    }
-
-  }
-}
-*/

@@ -22,11 +22,7 @@ namespace AlchimonAng.Models
         }
     }
 
-    public static class RoleConsts
-    {
-        public const string Player = "player";
-        public const string God = "god";
-    }
+    
 }
 
 

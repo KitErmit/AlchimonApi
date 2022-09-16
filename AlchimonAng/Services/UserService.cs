@@ -8,6 +8,12 @@ using AlchimonAng.Models;
 using AlchimonAng.ViewModels;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using AlchimonAng.Utils.Constans;
+using AlchimonAng.DB.Repository;
+using AlchimonAng.Helpers;
+using AlchimonAng.Providers;
+using Microsoft.AspNetCore.Mvc;
+using AlchimonAng.Accessors;
 
 namespace AlchimonAng.Services
 {
@@ -15,31 +21,34 @@ namespace AlchimonAng.Services
     {
         Task<BoolTextRespViewModel> Registration(ModelStateDictionary modelState, UserViewModel newPlayer);
         Task<BoolTextRespViewModel> Authentication(string nik, string password);
-        Task<IList<Player>> GetRoster();
-        Player GetPlayer(string id);
-        Task<Player> PutPlayer(Player player);
+        Task<Player> GetPlayer(ClaimsPrincipal user);
+        Task<BoolTextRespViewModel> PutPlayer(Player updatedPlayer);
+        Task<BoolTextRespViewModel> TokenCheck(ClaimsPrincipal user);
     }
 
     public class SimpleUserService : IUserService
     {
         private readonly IPlayerRepository _playerRepository;
-        private readonly HashService _hashService;
+        private readonly HashHepler _hashService;
         private readonly RegistrationService _registrationService;
-        private readonly JwtBuilderService _jwtBuilder;
+        private readonly JwtProvider _jwtService;
+        private readonly UserContextAccessor _userAccessor;
 
 
         public SimpleUserService
             (
             IPlayerRepository playerRepository,
-            HashService hashService,
+            HashHepler hashService,
             RegistrationService registrationService,
-            JwtBuilderService jwtBuilder
+            JwtProvider jwtServica,
+            UserContextAccessor userAccessor
             )
         {
             _playerRepository = playerRepository;
             _hashService = hashService;
             _registrationService = registrationService;
-            _jwtBuilder = jwtBuilder;
+            _jwtService = jwtServica;
+            _userAccessor = userAccessor;
         }
 
         public async Task<BoolTextRespViewModel> Registration(ModelStateDictionary modelState, UserViewModel newPlayerr)
@@ -49,40 +58,41 @@ namespace AlchimonAng.Services
 
         public async Task<BoolTextRespViewModel> Authentication(string email, string password)
         {
-            password = _hashService.StringToHash(password);
+            password = _hashService.StringToSha256(password);
             Player? player = _playerRepository.GetList().Result.FirstOrDefault(p => p.Email.ToLower() == email.ToLower() && p.Password == password);
-            if (player is null) return new BoolTextRespViewModel { Good = false, Text = "Неверный логин или пароль" };
+            if (player is null) throw new Exception( "Неверный логин или пароль");
 
 
-            var encodedJwt = await _jwtBuilder.BuildToken(player);
+            var encodedJwt = await _jwtService.BuildToken(player);
 
             return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
         }
 
-        public async Task<IList<Player>> GetRoster()
-        {
-            var list = await _playerRepository.GetList();
-            var gods = (IList<Player>)list.Where(p => p.role == RoleConsts.God).ToList();
-            var players = (IList<Player>)list.Where(p => p.role == RoleConsts.Player).ToList();
-            list = gods.Concat(players).ToList(); ;
-            
-            return list;
-        }
+        
 
-        public Player GetPlayer(string id)
+        public async Task<Player> GetPlayer(ClaimsPrincipal user)
         {
-            var player = _playerRepository.GetOne(id).Result;
-            if (player is null) throw new Exception($"Игрок не найден id: {id}");
+            ClaimsUserViewModel? ClaimUser = _userAccessor.GetClimsParams(user);
+            var player = await _playerRepository.GetOne(ClaimUser.Id);
+            if (player is null) throw new Exception($"Игрок не найден id: {ClaimUser.Nik}");
             return player;
         }
 
-        public async Task<Player> PutPlayer(Player player)
+        public async Task<BoolTextRespViewModel> PutPlayer(Player updatedPlayer)
         {
-            return await _playerRepository.Update(player);
+            var player = await _playerRepository.Update(updatedPlayer);
+            if (player is null) throw new Exception("Не найден пользователь по итогу обновления");
+            return new BoolTextRespViewModel { Good = true, Text = $"Готово. {player.Nik} id: {player.Id}" };
         }
 
-
-        
+        public async Task<BoolTextRespViewModel> TokenCheck(ClaimsPrincipal user)
+        {
+            ClaimsUserViewModel? ClaimUser = _userAccessor.GetClimsParams(user);
+            if (ClaimUser.Id is null) throw new Exception("Айди пуст");
+            var pl = await _playerRepository.GetOne(ClaimUser.Id);
+            if(pl is null)throw new Exception("Не нашли пользователя по айди " + ClaimUser.Id);
+            return new BoolTextRespViewModel { Good = true, Text = pl.Nik };
+        }
 
     }
 }

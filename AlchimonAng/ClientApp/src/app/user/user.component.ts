@@ -52,9 +52,10 @@ export class UserComponent {
           }
           else {
             this.passdone = true;
+            this.errorMes = this.servresp.text;
           }
         },
-        error: error => console.log(error)
+        error: error => { console.log; this.errorMes = error; this.passdone = true }
       });
   }
 
@@ -84,7 +85,7 @@ export class UserComponent {
             }
           },
 
-          error: error => console.log(error)
+          error: error => { this.errorMes = error; this.passdone = true }
         });
     }
     else {
@@ -96,14 +97,18 @@ export class UserComponent {
 
 
   ngOnInit() {
-    const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
-    this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          if (data.good) this.router.navigateByUrl("/my-profile");
-        },
-        error: error => console.log(error)
-      });
+    var stor = localStorage.getItem("AlToken");
+    if (stor !== null || stor !== undefined) {
+      const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+      this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
+        .subscribe({
+          next: (data: any) => {
+            if (data.good) this.router.navigateByUrl("/my-profile");
+          },
+          error: error => { this.errorMes = error; this.passdone = true }
+        });
+    }
+    
   }
 }
 

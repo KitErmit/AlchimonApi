@@ -1,4 +1,5 @@
-﻿using AlchimonAng.ViewModels;
+﻿using AlchimonAng.DB.Repository;
+using AlchimonAng.ViewModels;
 using System.Security.Claims;
 
 namespace AlchimonAng.Services
@@ -17,6 +18,7 @@ namespace AlchimonAng.Services
         {
             string respText = "";
             ClaimsIdentity? identity = user.Identity as ClaimsIdentity;
+            
             if (identity is null || !identity.IsAuthenticated) return new BoolTextRespViewModel { Good = false, Text = "Pusto" };
             else
             {

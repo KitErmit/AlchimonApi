@@ -1,12 +1,12 @@
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { HttpService } from './services/http.service';
+import { HttpService } from '../services/http.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { NavMenuComponent } from '../nav-menu/nav-menu.component';
 import { Observable } from "rxjs";
 import { map } from 'rxjs/operators';
-import { NavMenuService } from './nav-menu/nav-menu.service';
+import { NavMenuService } from '../nav-menu/nav-menu.service';
 
 @Injectable()
 export class NavGuard implements CanActivate {

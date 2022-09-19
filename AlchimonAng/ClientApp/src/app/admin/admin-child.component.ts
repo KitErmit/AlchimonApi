@@ -1,4 +1,4 @@
-import { Component, Inject, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from '../models/user';
@@ -10,7 +10,7 @@ import { User } from '../models/user';
   templateUrl: './admin-child.component.html'
 })
 
-export class AdminChildComponent implements OnInit, OnChanges  {
+export class AdminChildComponent implements  OnInit, OnChanges  {
   @Input() name: string = "";
   nameForCheck: string = "";
   test: string = "not ok";
@@ -59,7 +59,6 @@ export class AdminChildComponent implements OnInit, OnChanges  {
   }
 
 
-
   ngOnInit() {
     if (localStorage.getItem("AlToken") === null || localStorage.getItem("AlToken") === undefined) this.router.navigateByUrl("/my-profile");
     const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
@@ -77,10 +76,10 @@ export class AdminChildComponent implements OnInit, OnChanges  {
         },
         error: error => {
           console.log(error);
-          this.router.navigateByUrl("/my-profile");
         }
       });
   }
+  
 
   ngOnChanges(changes: SimpleChanges) {
 

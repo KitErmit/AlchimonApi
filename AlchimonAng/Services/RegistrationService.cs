@@ -29,30 +29,26 @@ namespace AlchimonAng.Services
 
         public async Task<BoolTextRespViewModel> TryCreateNewPlayer(ModelStateDictionary modelState, UserViewModel newPlayer)
         {
-            Player? playerDone = null;
-            string? Jwt = null;
-            try
-            {
+            
+            
                 
-                await RepeatEmailCheck(newPlayer.Email);
-                ValidCheck(modelState);
-                playerDone = await FromVModelToPlayer(newPlayer);
-                var create = _playerRepository.Create(playerDone);
-                var jwtBuild = _jwtBuilder.BuildToken(playerDone);
-                var CheakPl = await create;
-                if (playerDone.Email == CheakPl.Email && playerDone.Id == CheakPl.Id && playerDone.Nik == CheakPl.Nik) Jwt = await jwtBuild;
-            }
-            catch(Exception ex)
-            {
-                string errorMessages = ex.Message;
+
+            await RepeatEmailCheck(newPlayer.Email);
+
+            ValidCheck(modelState);
+            Player? playerDone = await FromVModelToPlayer(newPlayer);
+            var create = _playerRepository.Create(playerDone);
+            var jwtBuild = _jwtBuilder.BuildToken(playerDone);
+            var CheakPl = await create;
+            string? Jwt = null;
+            if (playerDone.Email == CheakPl.Email && playerDone.Id == CheakPl.Id && playerDone.Nik == CheakPl.Nik)
+                Jwt = await jwtBuild;
 #if DEBUG
-                Console.WriteLine(errorMessages);
+                Console.WriteLine($"JWT: {Jwt}");
 #endif
-                return new BoolTextRespViewModel { Good = false, Text = errorMessages };
-            }
-            Console.WriteLine("JWT: " + Jwt);
+
             if (Jwt is not null) return new BoolTextRespViewModel { Good = true, Text = $"PlayerID: {playerDone.Id} JWT: " + Jwt };
-            else return new BoolTextRespViewModel { Good = false, Text = "Jwt is null in RegistrationService " };
+            else throw new Exception("Jwt is null in RegistrationService ");
 
         }
 

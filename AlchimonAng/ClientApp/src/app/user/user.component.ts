@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { User } from './model';
-import { TokenResp } from './tokenresp';
+
+import { BoolText } from '../models/bool-text';
+import { Enter } from '../models/enter';
+import { WhelcomeService } from '../services/whelcome.service';
 
 @Component({
   selector: 'app-user',
@@ -13,16 +15,16 @@ import { TokenResp } from './tokenresp';
 })
 export class UserComponent {
 
-  servresp: TokenResp = new TokenResp("Pusto", false);
+  servresp: BoolText = new BoolText("Pusto", false);
   errorMes: string = "Pusto";
   done: boolean = false;
   reg: boolean = false;
   auth: boolean = true;
   passdone: boolean = false;
-  otpr: User = new User("", "", "");
-  user: User | undefined;
+  otpr: Enter = new Enter("", "", "");
+  user: Enter | undefined;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private whelcomeServ: WhelcomeService) { }
 
   authform() {
     this.reg = false;
@@ -35,58 +37,42 @@ export class UserComponent {
 
 
 
-  authsubmit(otpr: User) {
-    const Headers = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
-    const body = { email: otpr.email, password: otpr.password, passconf: otpr.passconf };
-    this.http.post('https://localhost:7170/User/Authorize', body, { headers: Headers })
-      .subscribe({
-        next: (data: any) => {
-          this.servresp = new TokenResp(data.text, data.good);
-          if (this.servresp.good) {
+  authsubmit(otpr: Enter) {
+    this.whelcomeServ.tryEnter(true, otpr).subscribe({
+      next: (data: BoolText) => {
+        if (data.good) {
+          this.passdone = false;
+          this.auth = false;
+          localStorage.setItem("AlToken", "Bearer " + data.text);
+          this.router.navigateByUrl("/my-profile");
+        }
+        else {
+          this.passdone = true;
+          this.errorMes = this.whelcomeServ.errorMess;
+        }
+      }
+    });
+  }
+
+
+  submit(otpr: Enter) {
+    if (otpr.password === otpr.passconf) {
+      this.whelcomeServ.tryEnter(false, otpr).subscribe({
+        next: (data: BoolText) => {
+          if (data.good) {
+            var arr = <string[]>data.text.split(" ");
+            var token = arr[arr.length - 1];
             this.passdone = false;
-            this.done = true;
-            this.auth = false;
-            localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
-            this.servresp.text = "КРАСАВЧЕГ" + <string>localStorage.getItem("AlToken");
+            this.reg = false;
+            localStorage.setItem("AlToken", "Bearer " + token);
             this.router.navigateByUrl("/my-profile");
           }
           else {
             this.passdone = true;
-            this.errorMes = this.servresp.text;
+            this.errorMes = this.whelcomeServ.errorMess;
           }
-        },
-        error: error => { console.log; this.errorMes = error; this.passdone = true }
+        }
       });
-  }
-
-
-  submit(otpr: User) {
-    if (otpr.password === otpr.passconf) {
-
-      const myHeaders = new HttpHeaders().set('Accept', 'application/json').set('Content-Type', 'application/json');
-      const body = { email: otpr.email, password: otpr.password, passconf: otpr.passconf };
-      this.http.post('https://localhost:7170/User/Registration', body, { headers: myHeaders })
-        .subscribe({
-          next: (data: any) => {
-
-            var arr = <string[]>data.text.split(" ");
-            this.servresp = new TokenResp(arr[arr.length - 1], data.good);
-            this.errorMes = data.text;
-            if (this.servresp.good) {
-              this.done = true;
-              this.passdone = false;
-              this.reg = false;
-              localStorage.setItem("AlToken", "Bearer " + this.servresp.text);
-              this.servresp.text = <string>localStorage.getItem("AlToken");
-              this.router.navigateByUrl("/my-profile");
-            }
-            else {
-              this.passdone = true;
-            }
-          },
-
-          error: error => { this.errorMes = JSON.stringify(error); this.passdone = true }
-        });
     }
     else {
       this.servresp.text = "Пароли не совпадают";
@@ -98,14 +84,15 @@ export class UserComponent {
 
   ngOnInit() {
     var stor = localStorage.getItem("AlToken");
-    if (stor !== null || stor !== undefined) {
-      const Headers = new HttpHeaders().set('Authorization', <string>localStorage.getItem("AlToken"));
+    console.log(stor);
+    if (stor !== null) {
+      const Headers = new HttpHeaders().set('Authorization', <string>stor);
       this.http.get('https://localhost:7170/User/AuthValid', { headers: Headers })
         .subscribe({
           next: (data: any) => {
             if (data.good) this.router.navigateByUrl("/my-profile");
           },
-          error: error => { this.errorMes = "DADA" + error; this.passdone = true }
+          error: error => { this.errorMes = "DADA" + error; console.log(error); this.passdone = true }
         });
     }
     

@@ -6,20 +6,18 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/guards/admin.guard.ts">
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Controllers/AdminController.cs">
     <Files>
       <File FileName="AlchimonAng/ClientApp/src/app/guards/admin.guard.ts" Line="24" Column="2" />
+      <File FileName="AlchimonAng/Controllers/AdminController.cs" Line="50" Column="77" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AlchimonAng" expanded="True">
             <Node name="AlchimonAng" expanded="True">
-              <Node name="ClientApp" expanded="True">
-                <Node name="src" expanded="True">
-                  <Node name="app" expanded="True" />
-                  <Node name="assets" expanded="True" />
-                </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController.cs" selected="True" />
               </Node>
               <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />

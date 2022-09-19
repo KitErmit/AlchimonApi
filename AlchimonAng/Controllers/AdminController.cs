@@ -45,7 +45,7 @@ namespace AlchimonAng.Controllers
 
         [Authorize(Roles = PlayerRoleConsts.God)] 
         [HttpPost("delet")]
-        public async Task<IActionResult> DeletPlaye([FromBody] BoolTextRespViewModel req)
+        public async Task<IActionResult> DeletePlayer([FromBody] BoolTextRespViewModel req)
         {
             return await MakeResponse(_adminService.DeletePlayer(req.Text));
         }

@@ -9,16 +9,14 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Controllers/AdminController.cs">
     <Files>
       <File FileName="AlchimonAng/ClientApp/src/app/guards/admin.guard.ts" Line="24" Column="2" />
-      <File FileName="AlchimonAng/Controllers/AdminController.cs" Line="50" Column="77" />
+      <File FileName="AlchimonAng/Controllers/AdminController.cs" Line="12" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AlchimonAng" expanded="True">
             <Node name="AlchimonAng" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="AdminController.cs" selected="True" />
-              </Node>
+              <Node name="Controllers" expanded="True" />
               <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
               <Node name="Utils" expanded="True">

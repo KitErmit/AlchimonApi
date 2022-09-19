@@ -28,7 +28,7 @@
     </div>
 
     <div *ngIf="passdone" class="alert alert-danger">
-        {{servresp?.text}}
+        {{errorMes}}
     </div>
 </div>
 
@@ -57,10 +57,8 @@
         <button class="btn btn-default" (click)="regform()">Зарегистрироваться</button>
     </div>
 
-    
+    <div *ngIf="passdone" class="alert alert-danger">
+        {{errorMes}}
+    </div>
 </div>
 
-
-<div *ngIf="done">
-    <p>Ответ: {{servresp?.text}}</p>
-</div>

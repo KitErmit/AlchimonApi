@@ -1,64 +1,30 @@
 ﻿<Properties StartupConfiguration="{4A460FD1-906B-4873-93E8-AD36B8AB3205}|Default">
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/ClientApp/src/app/user/user.component.ts">
+  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="AlchimonAng/Controllers/AdminController.cs">
     <Files>
-      <File FileName="AlchimonAng/Controllers/UserController.cs" Line="108" Column="1" />
-      <File FileName="AlchimonAng/Controllers/WeatherForecastController.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.component.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.module.ts" Line="38" Column="70" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.component.html" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.ts" Line="22" Column="26" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/user.component.html" Line="60" Column="5" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/tokenresp.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/user/model.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Models/Player.cs" Line="25" Column="1" />
-      <File FileName="AlchimonAng/Services/UserService.cs" Line="115" Column="6" />
-      <File FileName="AlchimonAng/Program.cs" Line="17" Column="19" />
-      <File FileName="AlchimonAng/appsettings.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Properties/launchSettings.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/appsettings.Development.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/package.json" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/styles.css" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Base/UserRoster.txt" Line="2" Column="1" />
-      <File FileName="AlchimonAng/ViewModels/UserViewModel.cs" Line="8" Column="9" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.ts" Line="57" Column="82" />
-      <File FileName="AlchimonAng/ClientApp/src/app/profile/profile.component.html" Line="28" Column="1" />
-      <File FileName="AlchimonAng/Services/IPlayerRepository.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/Services/ISaveLoader.cs" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.html" Line="16" Column="40" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.ts" Line="16" Column="21" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.component.css" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/app.server.module.ts" Line="1" Column="1" />
-      <File FileName="AlchimonAng/ClientApp/src/app/my.guard.ts" Line="18" Column="35" />
-      <File FileName="AlchimonAng/ClientApp/src/app/services/http.service.ts" Line="15" Column="85" />
-      <File FileName="AlchimonAng/ClientApp/src/app/nav-menu/nav-menu.service.ts" Line="19" Column="18" />
-      <File FileName="AlchimonAng/ClientApp/src/assets/navconst.json" Line="2" Column="24" />
+      <File FileName="AlchimonAng/ClientApp/src/app/guards/admin.guard.ts" Line="24" Column="2" />
+      <File FileName="AlchimonAng/Controllers/AdminController.cs" Line="50" Column="77" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AlchimonAng" expanded="True">
             <Node name="AlchimonAng" expanded="True">
-              <Node name="Base" expanded="True" />
-              <Node name="ClientApp" expanded="True">
-                <Node name="src" expanded="True">
-                  <Node name="app" expanded="True">
-                    <Node name="models" expanded="True" />
-                    <Node name="nav-menu" expanded="True" />
-                    <Node name="profile" expanded="True" />
-                    <Node name="services" expanded="True" />
-                    <Node name="user" expanded="True" />
-                  </Node>
-                  <Node name="assets" expanded="True" />
-                </Node>
+              <Node name="Controllers" expanded="True">
+                <Node name="AdminController.cs" selected="True" />
               </Node>
-              <Node name="Controllers" expanded="True" />
-              <Node name="Models" expanded="True" />
-              <Node name="Properties" expanded="True" />
+              <Node name="Providers" expanded="True" />
               <Node name="Services" expanded="True" />
+              <Node name="Utils" expanded="True">
+                <Node name="Constans" expanded="True" />
+              </Node>
               <Node name="ViewModels" expanded="True" />
-              <Node name="wwwroot" expanded="True" />
-              <Node name="appsettings.json" expanded="True" />
             </Node>
           </Node>
         </State>
@@ -68,10 +34,4 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.AlchimonAng PreferredExecutionTarget="/Applications/Opera GX.app" />
 </Properties>

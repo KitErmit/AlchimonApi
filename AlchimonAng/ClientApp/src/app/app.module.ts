@@ -7,22 +7,26 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
+import { NavMenuService } from './nav-menu/nav-menu.service';
 import { UserComponent } from './user/user.component';
 import { ProfileComponent } from './profile/profile.component';
-import { NavMenuService } from './nav-menu/nav-menu.service';
+import { AdminComponent } from './admin/admin.component';
 import { HttpService } from './services/http.service';
-import { NavGuard } from './my.guard';
+import { WhelcomeService } from './services/whelcome.service';
+import { AdminService } from './services/admin.service';
+import { NavGuard } from './guards/my.guard';
+import { AdminGuard } from './guards/admin.guard';
+
+import { AdminChildComponent } from './admin/admin-child.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    FetchDataComponent,
     UserComponent,
     ProfileComponent,
+    AdminComponent,
+    AdminChildComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -33,9 +37,10 @@ import { NavGuard } from './my.guard';
       { path: '', component: UserComponent},
       { path: 'authorize', component: UserComponent },
       { path: 'my-profile', component: ProfileComponent, canActivate: [NavGuard] },
+      { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
     ])
   ],
-  providers: [NavMenuComponent, NavGuard, HttpService, NavMenuService],
+  providers: [NavMenuComponent, NavGuard, AdminGuard, HttpService, NavMenuService, WhelcomeService, AdminService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -16,18 +16,13 @@ namespace AlchimonAng.Models
 
 
 
-
         public override string ToString()
         {
             return $"Id: {Id}\nNik: {Nik}\nPass: {Password}\nRole: {role}\nMoney: {Money}\nKarman.Count {Karman.Count}";
         }
     }
 
-    public static class RoleConsts
-    {
-        public const string Player = "player";
-        public const string God = "god";
-    }
+    
 }
 
 

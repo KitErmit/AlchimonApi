@@ -3,6 +3,7 @@ namespace AlchimonAng.Models
 {
     public class Alchemon : ICloneable
     {
+        public string Id { get; set; }
         public string Name { get; set; }
         public string AlName { get; set; }
         public string Emoji { get; set; }

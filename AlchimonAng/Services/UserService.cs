@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -6,110 +7,91 @@ using System.Text;
 using AlchimonAng.Models;
 using AlchimonAng.ViewModels;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using AlchimonAng.Utils.Constans;
+using AlchimonAng.DB.Repository;
+using AlchimonAng.Helpers;
+using AlchimonAng.Providers;
+using Microsoft.AspNetCore.Mvc;
+using AlchimonAng.Accessors;
 
 namespace AlchimonAng.Services
 {
     public interface IUserService
     {
-        Task<BoolTextRespViewModel> Registration(Player newPlayer);
+        Task<BoolTextRespViewModel> Registration(ModelStateDictionary modelState, UserViewModel newPlayer);
         Task<BoolTextRespViewModel> Authentication(string nik, string password);
-        Task<IList<Player>> GetRoster();
-        Player GetPlayer(string id);
-        Task<Player> PutPlayer(Player player);
+        Task<Player> GetPlayer(ClaimsPrincipal user);
+        Task<BoolTextRespViewModel> PutPlayer(Player updatedPlayer);
+        Task<BoolTextRespViewModel> TokenCheck(ClaimsPrincipal user);
     }
 
     public class SimpleUserService : IUserService
     {
         private readonly IPlayerRepository _playerRepository;
+        private readonly HashHepler _hashService;
+        private readonly RegistrationService _registrationService;
+        private readonly JwtProvider _jwtService;
+        private readonly UserContextAccessor _userAccessor;
 
 
-        public SimpleUserService(IPlayerRepository playerRepository)
+        public SimpleUserService
+            (
+            IPlayerRepository playerRepository,
+            HashHepler hashService,
+            RegistrationService registrationService,
+            JwtProvider jwtServica,
+            UserContextAccessor userAccessor
+            )
         {
             _playerRepository = playerRepository;
+            _hashService = hashService;
+            _registrationService = registrationService;
+            _jwtService = jwtServica;
+            _userAccessor = userAccessor;
         }
 
-        public async Task<BoolTextRespViewModel> Registration(Player newPlayer)
+        public async Task<BoolTextRespViewModel> Registration(ModelStateDictionary modelState, UserViewModel newPlayerr)
         {
-            var roster = _playerRepository.GetList().Result;
-            var exist = roster.FirstOrDefault(p => p.Email == newPlayer.Email);
-            if (exist is not null) throw new Exception("Пользователь с таким Email уже зарегистрирован");
-            newPlayer.Id = Guid.NewGuid().ToString();
-            newPlayer.Nik = "Defoult";
-            if (newPlayer.Email == "ki.termit@gmail.com" || newPlayer.Email == "Ki.termit@gmail.com")
-                newPlayer.role = RoleConsts.God;
-            else
-                newPlayer.role = RoleConsts.Player;
-            newPlayer.Money = 100;
-            newPlayer.Karman = new Dictionary<int, Alchemon>();
-            newPlayer.Password = PasswordToHash(newPlayer.Password);
-            string respID = await _playerRepository.Create(newPlayer);
-
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, newPlayer.Nik),
-                new Claim(ClaimTypes.Role, newPlayer.role),
-                new Claim(ClaimTypes.Country, newPlayer.Id)
-            };
-            var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.ISSUER,
-            audience: AuthOptions.AUDIENCE,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(15)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-
-            return new BoolTextRespViewModel { Good = true, Text = $"PlayerID: {respID} JWT: " + encodedJwt };
-
+            return await _registrationService.TryCreateNewPlayer(modelState, newPlayerr);
         }
 
         public async Task<BoolTextRespViewModel> Authentication(string email, string password)
         {
-            password = PasswordToHash(password);
+            password = _hashService.StringToSha256(password);
             Player? player = _playerRepository.GetList().Result.FirstOrDefault(p => p.Email.ToLower() == email.ToLower() && p.Password == password);
-            if (player is null) return new BoolTextRespViewModel { Good = false, Text = "Неверный логин или пароль" };
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, player.Nik),
-                new Claim(ClaimTypes.Role, player.role),
-                new Claim(ClaimTypes.Country, player.Id)
-            };
-            var jwt = new JwtSecurityToken(
-            issuer: AuthOptions.ISSUER,
-            audience: AuthOptions.AUDIENCE,
-            claims: claims,
-            expires: DateTime.UtcNow.Add(TimeSpan.FromMinutes(15)),
-            signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
-            Console.WriteLine(encodedJwt);
+            if (player is null) throw new Exception( "Неверный логин или пароль");
+
+
+            var encodedJwt = await _jwtService.BuildToken(player);
+
             return new BoolTextRespViewModel { Good = true, Text = encodedJwt };
         }
 
-        public async Task<IList<Player>> GetRoster()
-        {
-            var list = await _playerRepository.GetList();
+        
 
-            return list;
-        }
-
-        public Player GetPlayer(string id)
+        public async Task<Player> GetPlayer(ClaimsPrincipal user)
         {
-            var player = _playerRepository.GetOne(id).Result;
-            if (player is null) throw new Exception($"Игрок не найден id: {id}");
+            ClaimsUserViewModel? ClaimUser = _userAccessor.GetClimsParams(user);
+            var player = await _playerRepository.GetOne(ClaimUser.Id);
+            if (player is null) throw new Exception($"Игрок не найден id: {ClaimUser.Nik}");
             return player;
         }
 
-        public async Task<Player> PutPlayer(Player player)
+        public async Task<BoolTextRespViewModel> PutPlayer(Player updatedPlayer)
         {
-            return await _playerRepository.Update(player);
+            var player = await _playerRepository.Update(updatedPlayer);
+            if (player is null) throw new Exception("Не найден пользователь по итогу обновления");
+            return new BoolTextRespViewModel { Good = true, Text = $"Готово. {player.Nik} id: {player.Id}" };
         }
 
-
-        private string PasswordToHash(string pass)
+        public async Task<BoolTextRespViewModel> TokenCheck(ClaimsPrincipal user)
         {
-            SHA256 sha256 = SHA256Managed.Create();
-            UTF8Encoding objUtf8 = new UTF8Encoding();
-            var hashValue = sha256.ComputeHash(objUtf8.GetBytes(pass));
-            return Convert.ToBase64String(hashValue);
+            ClaimsUserViewModel? ClaimUser = _userAccessor.GetClimsParams(user);
+            if (ClaimUser.Id is null) throw new Exception("Айди пуст");
+            var pl = await _playerRepository.GetOne(ClaimUser.Id);
+            if(pl is null)throw new Exception("Не нашли пользователя по айди " + ClaimUser.Id);
+            return new BoolTextRespViewModel { Good = true, Text = pl.Nik };
         }
 
     }

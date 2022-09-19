@@ -1,5 +1,10 @@
-﻿using AlchimonAng.Models;
+﻿using AlchimonAng.Accessors;
+using AlchimonAng.DB.Repository;
+using AlchimonAng.Helpers;
+using AlchimonAng.Models;
+using AlchimonAng.Providers;
 using AlchimonAng.Services;
+using AlchimonAng.Utils.Configs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
@@ -38,6 +43,13 @@ builder.Services.AddSingleton<IUserService, SimpleUserService>();
 builder.Services.AddSingleton<ISaveLoader<Dictionary<string, Player>>, JsonLoader<Dictionary<string, Player>>>();
 builder.Services.AddSingleton<ISaveLoader<Alchemon>, JsonLoader<Alchemon>>();
 builder.Services.AddSingleton<IPlayerRepository, JsonPlayerRepository>();
+builder.Services.AddSingleton<IAdminService, SimpleAdminService>();
+builder.Services.AddSingleton<TestService>();
+builder.Services.AddSingleton<RegistrationService>();
+builder.Services.AddSingleton<HashHepler>();
+builder.Services.AddSingleton<JwtProvider>();
+builder.Services.AddSingleton<UserContextAccessor>();
+builder.Services.Configure<AdminConfig>(builder.Configuration.GetSection("Admin"));
 
 var app = builder.Build();
 
@@ -63,7 +75,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
+
 
 app.Run();
 

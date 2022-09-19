@@ -8,7 +8,6 @@ import { NavMenuService } from '../nav-menu/nav-menu.service';
 import { User } from '../models/user'
 
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html'
@@ -16,7 +15,6 @@ import { User } from '../models/user'
 export class ProfileComponent {
 
   putable: boolean = false;
-
   resp: User = new User("NaN", " ", " ", " ", 0);
   bufer: User = new User("NaN", " ", " ", " ", 0);
   constructor(private http: HttpClient, private router: Router, private navmen: NavMenuService) { }
@@ -43,7 +41,11 @@ export class ProfileComponent {
           this.bufer = new User(this.resp.id, this.resp.nik, this.resp.email, this.resp.role, this.resp.money);
           this.navmen.trygetname();
         },
-        error: error => console.log(error)
+        error: error => {
+          console.log(error);
+          this.router.navigateByUrl("/authorize");
+        }
+
       });
     
   }

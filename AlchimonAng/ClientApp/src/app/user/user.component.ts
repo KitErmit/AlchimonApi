@@ -85,7 +85,7 @@ export class UserComponent {
             }
           },
 
-          error: error => { this.errorMes = error; this.passdone = true }
+          error: error => { this.errorMes = JSON.stringify(error); this.passdone = true }
         });
     }
     else {
@@ -105,7 +105,7 @@ export class UserComponent {
           next: (data: any) => {
             if (data.good) this.router.navigateByUrl("/my-profile");
           },
-          error: error => { this.errorMes = error; this.passdone = true }
+          error: error => { this.errorMes = "DADA" + error; this.passdone = true }
         });
     }
     

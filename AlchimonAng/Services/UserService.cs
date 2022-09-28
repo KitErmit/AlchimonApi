@@ -82,6 +82,8 @@ namespace AlchimonAng.Services
         {
             var player = await _playerRepository.Update(updatedPlayer);
             if (player is null) throw new Exception("Не найден пользователь по итогу обновления");
+            _playerRepository.Save();
+            _playerRepository.Dispose();
             return new BoolTextRespViewModel { Good = true, Text = $"Готово. {player.Nik} id: {player.Id}" };
         }
 

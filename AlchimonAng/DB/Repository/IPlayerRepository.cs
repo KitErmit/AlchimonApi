@@ -3,13 +3,14 @@ using System.Linq;
 using AlchimonAng.Models;
 namespace AlchimonAng.DB.Repository
 {
-    public interface IPlayerRepository
+    public interface IPlayerRepository : IDisposable
     {
         Task<IList<Player>> GetList(); // получение всех объектов
         Task<Player> GetOne(string id); // получение одного объекта по id
         Task<Player> Create(Player newPlayer); // создание объекта
         Task<Player> Update(Player updatePlayer); // обновление объекта
         Task<Task> Delete(string id);
+        void Save();
     }
 
     public class JsonPlayerRepository : IPlayerRepository
@@ -63,5 +64,13 @@ namespace AlchimonAng.DB.Repository
             _roster.Clear();
             return Task.CompletedTask;
         }
+        public void Save() { }
+
+
+        public virtual void Dispose(bool disposing)
+        {}
+
+        public void Dispose()
+        {}
     }
 }

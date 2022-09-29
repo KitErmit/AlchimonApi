@@ -11,6 +11,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using AlchimonAng.DB;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,16 +40,17 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
         };
     });
-builder.Services.AddSingleton<IUserService, SimpleUserService>();
+builder.Services.AddScoped<IUserService, SimpleUserService>();
 builder.Services.AddSingleton<ISaveLoader<Dictionary<string, Player>>, JsonLoader<Dictionary<string, Player>>>();
 builder.Services.AddSingleton<ISaveLoader<Alchemon>, JsonLoader<Alchemon>>();
-builder.Services.AddSingleton<IPlayerRepository, JsonPlayerRepository>();
-builder.Services.AddSingleton<IAdminService, SimpleAdminService>();
-builder.Services.AddSingleton<TestService>();
-builder.Services.AddSingleton<RegistrationService>();
+builder.Services.AddScoped<IPlayerRepository, PstgrPlayerRepository>();
+builder.Services.AddScoped<IAdminService, SimpleAdminService>();
+builder.Services.AddScoped<TestService>();
+builder.Services.AddScoped<RegistrationService>();
 builder.Services.AddSingleton<HashHepler>();
 builder.Services.AddSingleton<JwtProvider>();
 builder.Services.AddSingleton<UserContextAccessor>();
+builder.Services.AddDbContext<AlBdContext>();
 builder.Services.Configure<AdminConfig>(builder.Configuration.GetSection("Admin"));
 
 var app = builder.Build();

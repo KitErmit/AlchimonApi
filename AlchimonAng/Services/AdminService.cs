@@ -45,6 +45,8 @@ namespace AlchimonAng.Services
             try
             {
                 await _playerRepository.Delete(id);
+                _playerRepository.Save();
+                _playerRepository.Dispose();
                 return new BoolTextRespViewModel { Good = true, Text = "Удаление прошло успешно" };
             }
             catch(Exception ex)

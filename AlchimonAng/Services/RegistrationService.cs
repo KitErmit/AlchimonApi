@@ -40,6 +40,8 @@ namespace AlchimonAng.Services
             var create = _playerRepository.Create(playerDone);
             var jwtBuild = _jwtBuilder.BuildToken(playerDone);
             var CheakPl = await create;
+            _playerRepository.Save();
+            _playerRepository.Dispose();
             string? Jwt = null;
             if (playerDone.Email == CheakPl.Email && playerDone.Id == CheakPl.Id && playerDone.Nik == CheakPl.Nik)
                 Jwt = await jwtBuild;
@@ -93,7 +95,6 @@ namespace AlchimonAng.Services
                 Password = _hashService.StringToSha256(newPlayer.Password),
                 role = role,
                 Money = role == PlayerRoleConsts.God ? 1_000_000 : 100,
-                Karman = new Dictionary<int, Alchemon>(),
             };
         }
 
